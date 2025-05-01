@@ -866,3 +866,112 @@
     flex-direction: column;
   }
 }
+/* === Research Page Styles === */
+.research-section {
+  padding: 60px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+.research-section h1 {
+  font-size: 36px;
+  color: #000;
+  margin-bottom: 10px;}
+
+.research-logo img {
+  max-width: 450px;
+  width: 100%;
+  margin: 30px 0;
+}
+
+.research-stats {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  padding: 20px 0;
+  margin-bottom: 40px;
+}
+
+.research-stats h2 {
+  font-size: 32px;
+  color: #003366;
+}
+
+.research-stats p {
+  font-size: 16px;
+}
+
+.research-block {
+  margin-bottom: 60px;
+}
+
+.research-block h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.research-description {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.research-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.research-flex.reverse {
+  flex-direction: row-reverse;
+}
+
+.research-flex img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.research-text-box {
+  background: #eaeaea;
+  padding: 20px;
+  max-width: 500px;
+  text-align: left;
+}
+
+.research-text-box h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.research-text-box p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.btn-orange {
+  display: inline-block;
+  background: #f7941e;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn-orange:hover {
+  background: #cc6a00;
+}
+
+@media (max-width: 768px) {
+  .research-flex {
+    flex-direction: column !important;
+  }
+
+  .research-text-box {
+    text-align: center;
+  }
+}
