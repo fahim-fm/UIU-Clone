@@ -1,9 +1,20 @@
+<?php
+// Step 2.1: Connect to the database
+$conn = new mysqli("localhost", "root", "", "notice"); // change "uiu_database" as per your DB
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Step 2.2: Get all notices
+$sql = "SELECT * FROM notices ORDER BY date DESC";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Academics</title>
+  <title>Notice</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" type="image/png" href="image/United_International_University_Monogram.svg.png">
 
@@ -43,54 +54,43 @@
       <a href="academic.html">Academics</a>
       <a href="research.html">Research</a>
       <a href="#">Students</a>
-     
       <a href="notices.php">Notices</a>
       <a href="contact.php">Contact</a>
     </nav>
   </header>
-  <section class="academic-section">
-    <div class="container">
-      <h1>Academics</h1>
-      <p>The academic units of UIU are comprised of four schools and several institutes, which offer a wide range of undergraduate, graduate and certificate programs.</p>
-
-      <div class="academic-banner">
-        <img src="image/default_image_uiu-e1709026264995.jpg" alt="UIU Logo">
+  <section class="notices-section">
+  <div class="container">
+    <h1>Notices</h1>
+    <div class="notice-intro">
+      <div class="notice-text">
+        <p>
+          Stay Updated: Explore the Latest Notices from UIU for Key Information on Academic Schedules, Upcoming Events, and Essential University Announcements.
+        </p>
       </div>
-
-      <div class="academic-stats">
-        <div class="stat-box">
-          <h2>200+</h2>
-          <p>Full Time Faculty Members</p>
-        </div>
-        <div class="stat-box">
-          <h2>Nearly 15000+</h2>
-          <p>Graduates</p>
-        </div>
-        <div class="stat-box">
-          <h2>17</h2>
-          <p>Programs</p>
-        </div>
-      </div>
-
-      <h2 class="section-title">Schools & Institutes</h2>
-
-      <div class="schools-list">
-        <span>School of Business and Economics</span>
-        <span>School of Science and Engineering</span>
-        <span>School of Humanities and Social Sciences</span>
-        <span>School of Life Sciences</span>
-        <span>Institute of Natural Sciences</span>
-        <span>Academic Information Policies</span>
-        <span>IQAC</span>
+      <div class="notice-img">
+        <img src="image/campus_07.jpg" alt="UIU Campus" />
       </div>
     </div>
-  </section>
 
-  <section class="registration-note">
-    <p>Registration Students are required to complete their registration formalities before a trimester/semester starts.</p>
-    <a href="#" class="policy-btn">Academic Information Policies</a>
-  </section>
-<!-- Footer Section -->
+    <div class="notice-grid">
+      <?php if ($result->num_rows > 0): ?>
+       <?php while($row = $result->fetch_assoc()): ?>
+  <div class="notice-item">
+    <span>📅 <?= date("F d, Y", strtotime($row['date'])) ?></span>
+    <p><?= htmlspecialchars($row['title']) ?></p>
+    <?php if (!empty($row['pdf_file'])): ?>
+      <a href="<?= htmlspecialchars($row['pdf_file']) ?>" target="_blank">📄 View PDF</a>
+    <?php endif; ?>
+  </div>
+<?php endwhile; ?>
+
+      <?php else: ?>
+        <p>No notices found.</p>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+  <!-- Footer Section -->
 <footer class="uiu-footer">
     
     <div class="footer-content">

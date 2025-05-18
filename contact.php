@@ -1,9 +1,39 @@
+<?php
+$messageSent = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // DB connection
+  $conn = new mysqli("localhost", "root", "", "notice");
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+
+  // Get form data
+  $fullname = $_POST['fullname'];
+  $email = $_POST['email'];
+  $subject = $_POST['subject'];
+  $message = $_POST['message'];
+
+  // Insert into database
+  $sql = "INSERT INTO contact_messages (fullname, email, subject, message)
+          VALUES ('$fullname', '$email', '$subject', '$message')";
+          
+  if ($conn->query($sql) === TRUE) {
+    $messageSent = "Message sent successfully.";
+  } else {
+    $messageSent = "Error: " . $conn->error;
+  }
+
+  $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Academics</title>
+  <title>UIU Clone</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" type="image/png" href="image/United_International_University_Monogram.svg.png">
 
@@ -12,7 +42,6 @@
 </head>
 <body>
 
-  
   <!-- Top bar -->
   <div class="top-bar">
     <div class="left-icons">🏠</div>
@@ -43,56 +72,43 @@
       <a href="academic.html">Academics</a>
       <a href="research.html">Research</a>
       <a href="#">Students</a>
-     
+      
       <a href="notices.php">Notices</a>
       <a href="contact.php">Contact</a>
     </nav>
   </header>
-  <section class="academic-section">
-    <div class="container">
-      <h1>Academics</h1>
-      <p>The academic units of UIU are comprised of four schools and several institutes, which offer a wide range of undergraduate, graduate and certificate programs.</p>
 
-      <div class="academic-banner">
-        <img src="image/default_image_uiu-e1709026264995.jpg" alt="UIU Logo">
-      </div>
+<div class="ccontact-section">
+  <h1>Contact & Location</h1>
+  <p class="address"><i class="fa fa-map-marker"></i> United City, Madani Avenue, Badda, Dhaka, Dhaka 1212, Bangladesh</p>
 
-      <div class="academic-stats">
-        <div class="stat-box">
-          <h2>200+</h2>
-          <p>Full Time Faculty Members</p>
-        </div>
-        <div class="stat-box">
-          <h2>Nearly 15000+</h2>
-          <p>Graduates</p>
-        </div>
-        <div class="stat-box">
-          <h2>17</h2>
-          <p>Programs</p>
-        </div>
-      </div>
+  <div class="contact-box">
+    <p><i class="fa fa-phone"></i> 09604 848848</p>
+    <p><i class="fa fa-mobile"></i> <strong>Admission Office:</strong> +8801759039498, +8801759039465,<br>
+    +8801759039451, +8801914001470, +8801550704732</p>
+  </div>
+</div>
 
-      <h2 class="section-title">Schools & Institutes</h2>
+<div class="fform-section">
+<p class="center-text">Please use the following form to contact the department/person.</p>
 
-      <div class="schools-list">
-        <span>School of Business and Economics</span>
-        <span>School of Science and Engineering</span>
-        <span>School of Humanities and Social Sciences</span>
-        <span>School of Life Sciences</span>
-        <span>Institute of Natural Sciences</span>
-        <span>Academic Information Policies</span>
-        <span>IQAC</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="registration-note">
-    <p>Registration Students are required to complete their registration formalities before a trimester/semester starts.</p>
-    <a href="#" class="policy-btn">Academic Information Policies</a>
-  </section>
+  <div class="fform-box">
+    <h2>Fill up the form</h2>
+    <form method="post">
+      <input type="text" name="fullname" placeholder="Enter your Full Name" required>
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <input type="text" name="subject" placeholder="Mention your subject" required>
+      <textarea name="message" placeholder="Brief description of your question*" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <?php if (!empty($messageSent)): ?>
+    <div class="message"><?= $messageSent ?></div>
+  <?php endif; ?>
+  </div>
+</div>
 <!-- Footer Section -->
 <footer class="uiu-footer">
-    
+   
     <div class="footer-content">
       <div class="footer-column">
         <img src="image/header-logo.png" alt="UIU Logo" class="footer-logo">

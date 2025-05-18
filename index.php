@@ -1,3 +1,14 @@
+<?php
+// Step 2.1: Connect to the database
+$conn = new mysqli("localhost", "root", "", "notice"); // change "uiu_database" as per your DB
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Step 2.2: Get all notices
+$sql = "SELECT * FROM notices ORDER BY date DESC";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +32,8 @@
       <a href="#">Faculty Members</a>
       <a href="#">Degree Verification</a>
       <a href="#">Important Contact</a>
-      <a href="#">Apply Online</a>
-      <a href="#">Profile Login</a>
+      <a href="apply_online.php">Apply Online</a>
+      <a href="admin_login.php">Admin Login</a>
     </div>
     <div class="search">
       <input type="text" placeholder="Search...">
@@ -36,15 +47,15 @@
       <img src="image/UIU-Logo_Final-1-1024x351.png" alt="UIU Logo">
     </div>
     <nav class="main-nav">
-      <a href="index.html">Home</a>
+      <a href="index.php">Home</a>
       <a href="about.html">About</a>
       <a href="admission.html">Admission</a>
       <a href="academic.html">Academics</a>
       <a href="research.html">Research</a>
       <a href="#">Students</a>
-      <a href="#">International</a>
-      <a href="#">Notices</a>
-      <a href="#">Contact</a>
+     
+      <a href="notices.php">Notices</a>
+      <a href="contact.php">Contact</a>
     </nav>
   </header>
 
@@ -63,7 +74,8 @@
     <div class="hero-content">
       <p>Admission Open Summer 2025 Trimester</p>
       <h1>United International University</h1>
-      <button>Apply Now</button>
+      <a href="apply_online.php"><button>Apply Now</button></a>
+
     </div>
 
     <div class="arrow left-arrow">
@@ -134,67 +146,23 @@
         Upcoming Events, and Essential University Announcements. Keep Informed, Stay Ahead!
       </p>
   
-      <div class="notice-list">
-        <div class="notice-item">
-          <div class="notice-date">
-            <span class="month">Apr</span>
-            <span class="day">22nd</span>
-          </div>
-          <div class="notice-content">
-            <p class="date-full">April 22, 2025</p>
-            <h4>Notice: Emergency Maintenance Work</h4>
-          </div>
-        </div>
-  
-        <div class="notice-item">
-          <div class="notice-date">
-            <span class="month">Apr</span>
-            <span class="day">20th</span>
-          </div>
-          <div class="notice-content">
-            <p class="date-full">April 20, 2025</p>
-            <h4>Make-up Class Schedule Spring 2025 Trimester</h4>
-          </div>
-        </div>
-  
-        <div class="notice-item">
-          <div class="notice-date">
-            <span class="month">Apr</span>
-            <span class="day">19th</span>
-          </div>
-          <div class="notice-content">
-            <p class="date-full">April 19, 2025</p>
-            <h4>Make-up Examination (Free of Charge) Policy</h4>
-          </div>
-        </div>
-  
-        <div class="notice-item">
-          <div class="notice-date">
-            <span class="month">Apr</span>
-            <span class="day">16th</span>
-          </div>
-          <div class="notice-content">
-            <p class="date-full">April 16, 2025</p>
-            <h4>Notice regarding Classes and Examinations of Spring 2025 Trimester/Semester</h4>
-          </div>
-        </div>
-  
-        <div class="notice-item">
-          <div class="notice-date">
-            <span class="month">Apr</span>
-            <span class="day">15th</span>
-          </div>
-          <div class="notice-content">
-            <p class="date-full">April 15, 2025</p>
-            <h4>Mid-Term Exam Schedule – Spring 2025 Semester</h4>
-          </div>
-        </div>
-      </div>
-  
-      <div class="notice-footer">
-        <button href="#" class="view-all">View All Notices</button>
-      </div>
+      <div class="notice-grid">
+      <?php if ($result->num_rows > 0): ?>
+       <?php while($row = $result->fetch_assoc()): ?>
+  <div class="notice-item">
+    <span>📅 <?= date("F d, Y", strtotime($row['date'])) ?></span>
+    <p><?= htmlspecialchars($row['title']) ?></p>
+    <?php if (!empty($row['pdf_file'])): ?>
+      <a href="<?= htmlspecialchars($row['pdf_file']) ?>" target="_blank">📄 View PDF</a>
+    <?php endif; ?>
+  </div>
+<?php endwhile; ?>
+
+      <?php else: ?>
+        <p>No notices found.</p>
+      <?php endif; ?>
     </div>
+  </div>
   </section>
   <!-- Events Section -->
 <section class="events-section">
@@ -204,82 +172,23 @@
   </p>
 
   <div class="event-grid">
-    <div class="event-card">
-      <a href="image/Banner.jpg" target="_blank">
-      <img src="image/Banner.jpg" alt="Event 1">
-      <div class="event-date">Apr<br>23rd</div>
-      <div class="event-content"></a>
-        <span>Seminar Room #126</span>
-        <h4>Higher Study at Murdoch University of Australia</h4>
-      </div>
+      <?php
+        $result = $conn->query("SELECT * FROM events ORDER BY date DESC");
+        while ($row = $result->fetch_assoc()) {
+          echo "<div class='event-item'>";
+          echo "<h3>" . $row['title'] . "</h3>";
+          echo "<span>📅 " . $row['date'] . "</span>";
+          echo "<p>" . $row['description'] . "</p>";
+          if ($row['image']) {
+            echo "<img src='" . $row['image'] . "' width='400'>";
+          }
+          echo "</div>";
+        }
+      ?>
     </div>
-
-    <div class="event-card">
-      <a href="image/8x8-Feet-1.jpg" target="_blank">
-      <img src="image/8x8-Feet-1.jpg" alt="Event 2">
-      <div class="event-date">Mar<br>15th</div>
-      <div class="event-content"></a>
-        <span>Seminar Room: 126 and UIU Cafeteria</span>
-        <h4>Qirat Competition & Eid Clothes Distribution among Orphans with Iftar – 2025</h4>
-      </div>
-    </div>
-
-    <div class="event-card">
-      <a href="image/Banner-Final.jpg" target="_blank">
-      <img src="image/Banner-Final.jpg" alt="Event 3">
-      <div class="event-date">Mar<br>12th</div>
-      <div class="event-content"></a>
-        <span>Seminar Room: 628</span>
-        <h4>Prize-Giving Ceremony of Basic C Programming Contest & Seminar on ‘Let’s Code Your Career through Problem Solving’</h4>
-      </div>
-    </div>
-
-    <div class="event-card">
-      <a href="image/Banner.png" target="_blank">
-      <img src="image/Banner.png" alt="Event 4">
-      <div class="event-date">Mar<br>1st</div>
-      <div class="event-content"></a>
-        <span>ShopUp Fast-Track (SFT)</span>
-        <h4>ShopUp Fast-Track (SFT), an exclusive career acceleration program</h4>
-      </div>
-    </div>
-
-    <div class="event-card">
-      <a href="image/Phitron-Presents-Final-Update-01.png" target="_blank">
-      <img src="image/Phitron-Presents-Final-Update-01.png" alt="Event 5">
-      <div class="event-date">Feb<br>26th</div>
-      <div class="event-content"></a>
-        <span>Seminar Room: 628</span>
-        <h4>Kickstart: A Push Toward Purposeful Programming</h4>
-      </div>
-    </div>
-
-    <div class="event-card">
-      <a href="image/WhatsApp-Image-2025-02-21-at-7.45.26-PM.jpeg" target="_blank">
-      <img src="image/WhatsApp-Image-2025-02-21-at-7.45.26-PM.jpeg" alt="Event 6">
-      <div class="event-date">Feb<br>24th</div>
-      <div class="event-content"></a>
-        <span>UIU Playground</span>
-        <h4>UIU Annual Sports – 2025 (Season 2)</h4>
-      </div>
-    </div>
-  </div>
-
-  <div class="explore-btn">
-    <button>Explore All Events</button>
   </div>
 </section>
-<!-- Follow Us Section -->
-<section class="follow-us">
-  <h2>Follow Us</h2>
-  <div class="social-icons">
-    <a href="#"><i class="fab fa-facebook-f"></i></a>
-    <a href="#"><i class="fab fa-youtube"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-  </div>
-</section>
+
 
 <!-- Footer Section -->
 <footer class="uiu-footer">

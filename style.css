@@ -290,7 +290,7 @@
   
   .notice-item {
     display: flex;
-    background: #034b63;
+    background: #08ddf95c;
     padding: 15px 20px;
     border-left: 4px solid #d63031;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -458,7 +458,7 @@
     background-color: #1a1a1a;
     color: white;
     position: relative;
-    padding: 100px 20px 40px;
+    padding: 40px 20px 40px;
     margin-top: -60px;
   }
   
@@ -549,7 +549,7 @@
 }
 
 .about img.uiu-logo {
-  width: 300px;
+  width: 500px;
   margin: 20px 0;
 }
 
@@ -974,4 +974,212 @@
   .research-text-box {
     text-align: center;
   }
+}
+/* === Notices Page === */
+.notices-section {
+  padding: 60px 20px;
+  background: #fff;
+}
+
+.notice-intro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.notice-text {
+  flex: 1;
+}
+
+.notice-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.notice-icons img {
+  width: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.notice-img img {
+  max-width: 500px;
+  border-radius: 5px;
+}
+
+.notice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px));
+  gap: 20px;
+}
+
+.notice-item {
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.notice-item span {
+  font-size: 14px;
+  color: #555;
+  display: block;
+  padding: 10px 10px;
+  margin-bottom: 5px;
+}
+
+.notice-item p {
+  font-size: 15px;
+  padding: 10px 10px;
+  color: #003366;
+  margin: 0;
+}
+
+.pagination {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.pagination span,
+.pagination a {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.pagination .current {
+  background-color: #003366;
+  color: #fff;
+}
+
+.pagination a {
+  background-color: #ddd;
+  color: #000;
+}
+
+.pagination a:hover {
+  background-color: #bbb;
+}
+.notice-item, .event-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background: #08ddf951;
+}
+
+.notice-item img, .event-item img {
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 4px;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+}
+
+.ccontact-section {
+  background-image: url('image/BC4.jpg');
+  background-size: cover;
+  color: rgb(39, 11, 11);
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.ccontact-section h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.address {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.ccontact-box {
+  display: inline-block;
+  background-color: #FFA500;
+  color: black;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.fform-section {
+  padding: 70px 20px;
+  background-color: #ffffff;
+}
+
+.fform-box {
+  max-width: 600px;
+  margin: auto;
+  background-color: #f9f9f9;
+  padding: 60px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.fform-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.fform-box input[type="text"],
+.fform-box input[type="email"],
+.fform-box textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.fform-box button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fform-box button:hover {
+  background-color: #1a252f;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  color: green;
+  font-weight: bold;
+}
+
+.center-text {
+  text-align: center;
+  margin-bottom: 20px; /* Adds space below the paragraph */
+}
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+  width: 300px;
+}
+h2 {
+  text-align: center;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
