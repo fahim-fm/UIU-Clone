@@ -28,12 +28,8 @@ $result = $conn->query($sql);
   <div class="top-bar">
     <div class="left-icons">🏠</div>
     <div class="top-links">
-      <a href="#">DSpace</a>
-      <a href="#">Library</a>
-      <a href="#">Faculty Members</a>
-      <a href="#">Degree Verification</a>
-      <a href="#">Important Contact</a>
-      <a href="#">Apply Online</a>
+     <a href="fees.html">Tuition Fees & Waiver</a>
+      <a href="apply_online.php">Apply Online</a>
       <a href="admin_login.php">Admin Login</a>
     </div>
     <div class="search">

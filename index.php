@@ -27,11 +27,7 @@ $result = $conn->query($sql);
   <div class="top-bar">
     <div class="left-icons">🏠</div>
     <div class="top-links">
-      <a href="#">DSpace</a>
-      <a href="#">Library</a>
-      <a href="#">Faculty Members</a>
-      <a href="#">Degree Verification</a>
-      <a href="#">Important Contact</a>
+      <a href="fees.html">Tuition Fees & Waiver</a>
       <a href="apply_online.php">Apply Online</a>
       <a href="admin_login.php">Admin Login</a>
     </div>
@@ -96,7 +92,7 @@ $result = $conn->query($sql);
     <div class="about-content">
       <h2>Quest For Excellence</h2>
       <p>The mission of UIU is to create excellent human resources with intellectual, creative, technical, moral and practical skills to serve community, industry and region. We do it by developing integrated, interactive, involved and caring relationships among teachers, students, guardians and employers.</p>
-      <button>More About UIU</button>
+      <a href="coming_soon.html"><button>More About UIU</button></a>
     </div>
   </section>
 
@@ -111,13 +107,13 @@ $result = $conn->query($sql);
         <img src="image/sprin2025.jpg" alt="Undergraduate Programs">
         <h4>Undergraduate Programs</h4>
         <p>UIU offers 12 undergraduate programs from 3 different schools.</p>
-        <button>Undergraduate Programs</button>
+        <a href="ungad.html"><button>Undergraduate Programs</button></a>
       </div>
       <div class="card">
         <img src="image/gradute.webp" alt="Graduate Programs">
         <h4>Graduate Programs</h4>
         <p>UIU offers 6 graduate programs from 3 different schools.</p>
-        <button>Graduate Programs</button>
+       <a href="ungad.html"><button>Graduate Programs</button></a>
       </div>
       <div class="card">
         <img src="image/download2.jpeg" alt="Continuing Education">

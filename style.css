@@ -1183,3 +1183,77 @@ h2 {
   text-align: center;
   margin-top: 10px;
 }
+.tuition-section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  background: #fff;
+}
+
+.tuition-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.tuition-logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tuition-logo img {
+  max-width: 200px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+
+.tuition-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+}
+
+.tuition-table th,
+.tuition-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.tuition-table thead {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+.scholarship-box {
+  background-color: #f3f3f3;
+  padding: 25px;
+  border-left: 5px solid orange;
+  margin-bottom: 40px;
+}
+
+.scholarship-box h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.learn-btn {
+  display: inline-block;
+  background: orange;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.admission-notes h4 {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.admission-notes ul {
+  margin-left: 20px;
+}
