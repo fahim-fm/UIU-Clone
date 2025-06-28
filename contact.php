@@ -1,12 +1,9 @@
 <?php
 $messageSent = "";
+include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // DB connection
-  $conn = new mysqli("localhost", "root", "", "notice");
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
+  
 
   // Get form data
   $fullname = $_POST['fullname'];

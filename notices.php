@@ -1,10 +1,5 @@
 <?php
-// Step 2.1: Connect to the database
-$conn = new mysqli("localhost", "root", "", "notice"); // change "uiu_database" as per your DB
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+include 'db_connect.php';
 // Step 2.2: Get all notices
 $sql = "SELECT * FROM notices ORDER BY date DESC";
 $result = $conn->query($sql);

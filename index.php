@@ -1,10 +1,5 @@
 <?php
-// Step 2.1: Connect to the database
-$conn = new mysqli("localhost", "root", "", "notice"); // change "uiu_database" as per your DB
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+include 'db_connect.php';
 // Step 2.2: Get all notices
 $sql = "SELECT * FROM notices ORDER BY date DESC";
 $result = $conn->query($sql);
@@ -167,22 +162,24 @@ $result = $conn->query($sql);
     and Gatherings. Connect, Learn, and Grow with Our Engaging University Events and Activities!
   </p>
 
-  <div class="event-grid">
-      <?php
-        $result = $conn->query("SELECT * FROM events ORDER BY date DESC");
-        while ($row = $result->fetch_assoc()) {
-          echo "<div class='event-item'>";
-          echo "<h3>" . $row['title'] . "</h3>";
-          echo "<span>📅 " . $row['date'] . "</span>";
-          echo "<p>" . $row['description'] . "</p>";
-          if ($row['image']) {
-            echo "<img src='" . $row['image'] . "' width='400'>";
-          }
-          echo "</div>";
-        }
-      ?>
-    </div>
-  </div>
+ <div class="event-grid">
+  <?php
+    $result = $conn->query("SELECT * FROM events ORDER BY date DESC");
+    while ($row = $result->fetch_assoc()) {
+      echo "<div class='event-item'>";
+      echo "<h3>" . $row['title'] . "</h3>";
+      echo "<span>📅 " . $row['date'] . "</span>";
+      echo "<p>" . $row['description'] . "</p>";
+      if ($row['image']) {
+        echo "<a href='" . $row['image'] . "' target='_blank'>
+                <img src='" . $row['image'] . "' width='400'>
+              </a>";
+      }
+      echo "</div>";
+    }
+  ?>
+</div>
+
 </section>
 
 

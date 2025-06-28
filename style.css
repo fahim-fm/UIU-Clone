@@ -1257,3 +1257,19 @@ h2 {
 .admission-notes ul {
   margin-left: 20px;
 }
+.pdf-link {
+  display: inline-block;
+  background-color: #0066cc;
+  color: #fff;
+  padding: 8px 14px;
+  margin-top: 8px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-link:hover {
+  background-color: #004999;
+  text-decoration: underline;
+}
