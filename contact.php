@@ -3,7 +3,7 @@ $messageSent = "";
 include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
+
 
   // Get form data
   $fullname = $_POST['fullname'];

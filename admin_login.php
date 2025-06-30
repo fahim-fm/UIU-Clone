@@ -80,6 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <input type="email" name="email" placeholder="Email" required />
       <input type="password" name="password" placeholder="Password" required />
       <button type="submit">Login</button>
+      <p style="text-align: center; margin-top: 10px;">
+  <a href="forgot_password.php">Forgot Password?</a>
+</p>
+
       <?php if ($msg): ?>
         <div class="error"><?= $msg ?></div>
       <?php endif; ?>
