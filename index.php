@@ -166,10 +166,23 @@ $result = $conn->query($sql);
   <?php
     $result = $conn->query("SELECT * FROM events ORDER BY date DESC");
     while ($row = $result->fetch_assoc()) {
+      // Split description into words
+      $descriptionWords = explode(' ', $row['description']);
+      $shortDescription = implode(' ', array_slice($descriptionWords, 0, 10));
+      $fullDescription = $row['description'];
+      $id = uniqid("event_"); // unique ID for toggling
+
       echo "<div class='event-item'>";
       echo "<h3>" . $row['title'] . "</h3>";
       echo "<span>📅 " . $row['date'] . "</span>";
-      echo "<p>" . $row['description'] . "</p>";
+
+      if (count($descriptionWords) > 10) {
+        echo "<p id='$id-short'>" . $shortDescription . "… <a href='javascript:void(0)' onclick='toggleDescription(\"$id\")'>See more</a></p>";
+        echo "<p id='$id-full' style='display:none;'>" . $fullDescription . " <a href='javascript:void(0)' onclick='toggleDescription(\"$id\")'>See less</a></p>";
+      } else {
+        echo "<p>" . $fullDescription . "</p>";
+      }
+
       if ($row['image']) {
         echo "<a href='" . $row['image'] . "' target='_blank'>
                 <img src='" . $row['image'] . "' width='400'>
@@ -179,6 +192,22 @@ $result = $conn->query($sql);
     }
   ?>
 </div>
+
+<!-- 🔽 JavaScript to toggle description -->
+<script>
+  function toggleDescription(id) {
+    const shortPara = document.getElementById(id + '-short');
+    const fullPara = document.getElementById(id + '-full');
+    if (shortPara.style.display === 'none') {
+      shortPara.style.display = 'block';
+      fullPara.style.display = 'none';
+    } else {
+      shortPara.style.display = 'none';
+      fullPara.style.display = 'block';
+    }
+  }
+</script>
+
 
 </section>
 
