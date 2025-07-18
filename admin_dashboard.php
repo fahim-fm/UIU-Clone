@@ -103,6 +103,7 @@ if (!isset($_SESSION["admin_logged_in"])) {
       <a href="view_applications.php"><i class="fa-solid fa-file-lines"></i> View Applications</a>
       <a href="manage_events.php"><i class="fa-solid fa-calendar-days"></i> Manage Events</a>
       <a href="manage_notices.php"><i class="fa-solid fa-bullhorn"></i> Manage Notices</a>
+      <a href="manage_students.php"><i class="fa-solid fa-bullhorn"></i> Manage Students</a>
     </nav>
     <a href="logout.php" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
   </div>
