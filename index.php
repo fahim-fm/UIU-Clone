@@ -25,6 +25,7 @@ $result = $conn->query($sql);
       <a href="fees.html">Tuition Fees & Waiver</a>
       <a href="apply_online.php">Apply Online</a>
       <a href="admin_login.php">Admin Login</a>
+      <a href="student_auth.php">Student Login</a>
     </div>
     <div class="search">
       <input type="text" placeholder="Search...">

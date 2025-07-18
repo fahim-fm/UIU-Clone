@@ -3,82 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <title>Apply Online - UIU</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+    * {
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: url('image/BC4.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .back-home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .back-home a {
+      text-decoration: none;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .back-home a:hover {
+      background: rgba(0,0,0,0.6);
     }
 
     .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
       max-width: 600px;
-      background: #fff;
-      margin: auto;
-      padding: 30px;
-      box-shadow: 0 0 10px #ccc;
-      border-radius: 10px;
+      width: 90%;
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 0.8s ease-in-out;
+      color: #fff;
     }
 
     h2 {
       text-align: center;
-      color: #0066cc;
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 25px;
     }
 
     form input, form textarea, form select {
       width: 100%;
       padding: 12px;
       margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: none;
+      border-radius: 10px;
+      background:linear-gradient(190deg, #6a11cb, #2575fc);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    form input::placeholder, form textarea::placeholder {
+      color: #ddd;
+    }
+
+    form select option {
+      color: #000;
     }
 
     button {
-      background-color: #0066cc;
+      background: linear-gradient(135deg, #f804ecff, #25fc90ff);
       color: white;
       padding: 12px 20px;
       border: none;
       width: 100%;
-      border-radius: 6px;
+      border-radius: 10px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     button:hover {
-      background-color: #004999;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .success {
       text-align: center;
-      color: green;
-      margin-bottom: 10px;
+      color: #b8ffb8;
+      background: rgba(0, 128, 0, 0.2);
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
     }
 
-    .dashboard-link {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .dashboard-link a {
-      text-decoration: none;
-      background-color: #444;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-    }
-
-    .dashboard-link a:hover {
-      background-color: #222;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
+<div class="back-home">
+  <a href="index.php">⬅ Back to Home</a>
+</div>
+
 <div class="container">
-  <h2>Apply Online</h2>
+  <h2>📝 Apply Online</h2>
 
   <?php if (isset($_GET['success'])): ?>
-    <div class="success">Application submitted successfully!</div>
+    <div class="success">✅ Application submitted successfully!</div>
   <?php endif; ?>
 
   <form action="submit_application.php" method="POST">
@@ -95,10 +140,6 @@
     <textarea name="message" placeholder="Write your message..." rows="5"></textarea>
     <button type="submit">Submit Application</button>
   </form>
-
-  <div class="dashboard-link">
-    <a href="index.php">Back to Home</a>
-  </div>
 </div>
 
 </body>
