@@ -16,7 +16,6 @@
       height: 100%;
       font-family: 'Poppins', sans-serif;
     }
-  
 
     .coming-soon {
       background: url('image/soon.jpg') no-repeat center center/cover;

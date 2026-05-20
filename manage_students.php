@@ -1,65 +1,57 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: admin_login.php");
-    exit();
-}
+if (!isset($_SESSION['admin_logged_in'])) { header('Location: admin_login.php'); exit(); }
 include 'db_connect.php';
 
-$result = $conn->query("SELECT * FROM students");
+$result = $conn->query("SELECT * FROM students ORDER BY created_at DESC");
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Manage Students</title>
-    <style>
-        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
-        table {
-            width: 90%; margin: auto; border-collapse: collapse; background: #fff;
-        }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-        th { background: #333; color: #fff; }
-        img { width: 50px; height: 50px; border-radius: 50%; }
-        a.btn { padding: 5px 10px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-        .delete { background: red; }
-            .back-btn { background: #28a745; margin: 20px auto; display: block; width: 200px; text-align: center; }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Students – UIU Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="admin-table.css">
 </head>
 <body>
-    <h2 style="text-align:center;">Manage Students</h2>
+<div class="admin-wrap">
+  <h2>👥 Manage Students</h2>
+  <div class="back-row" style="margin-bottom:16px;">
+    <a href="admin_dashboard.php" class="btn btn-back">⬅ Dashboard</a>
+  </div>
+  <div class="table-responsive">
     <table>
-        <tr>
-            <th>Photo</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Level</th>
-            <th>Registered</th>
-            <th>Actions</th>
-        </tr>
-        <?php while($row = $result->fetch_assoc()): ?>
-        <tr>
-            <td>
-                <?php if(!empty($row['profile_pic'])): ?>
-                    <img src="<?= $row['profile_pic'] ?>" alt="Profile">
-                <?php else: ?>
-                    <img src="uploads/profile_pics/default.png" alt="Default">
-                <?php endif; ?>
-            </td>
-            <td><?= htmlspecialchars($row['fullname']); ?></td>
-            <td><?= htmlspecialchars($row['email']); ?></td>
-            <td><?= htmlspecialchars($row['department']); ?></td>
-            <td><?= htmlspecialchars($row['level']); ?></td>
-            <td><?= htmlspecialchars($row['created_at']); ?></td>
-            <td>
-                <a class="btn" href="edit_student.php?id=<?= $row['id'] ?>">Edit</a>
-                <a class="btn delete" href="delete_student.php?id=<?= $row['id'] ?>" onclick="return confirm('Delete this student?')">Delete</a>
-            </td>
-        </tr>
-        <?php endwhile; ?>
+      <thead>
+        <tr><th>Photo</th><th>Full Name</th><th>Email</th><th>Dept.</th><th>Level</th><th>Registered</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <?php if ($result && $result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+              <td>
+                <img class="thumb"
+                  src="<?= !empty($row['profile_pic']) ? htmlspecialchars($row['profile_pic']) : 'uploads/profile_pics/default.png' ?>"
+                  alt="photo">
+              </td>
+              <td><?= htmlspecialchars($row['fullname']) ?></td>
+              <td><?= htmlspecialchars($row['email']) ?></td>
+              <td><?= htmlspecialchars($row['department']) ?></td>
+              <td><?= htmlspecialchars($row['level']) ?></td>
+              <td><?= htmlspecialchars($row['created_at']) ?></td>
+              <td class="actions">
+                <a class="btn btn-edit"   href="edit_student.php?id=<?= (int)$row['id'] ?>">Edit</a>
+                <a class="btn btn-delete" href="delete_student.php?id=<?= (int)$row['id'] ?>"
+                   onclick="return confirm('Delete this student?')">Delete</a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr><td colspan="7" style="text-align:center">No students found.</td></tr>
+        <?php endif; ?>
+      </tbody>
     </table>
-    
+  </div>
+</div>
 </body>
-<a href="admin_dashboard.php" class="btn back-btn">⬅ Back to Dashboard</a>
 </html>

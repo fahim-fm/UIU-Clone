@@ -1,68 +1,44 @@
 <?php
-include 'db_connect.php'; // ✅ Reuse DB connection
-$msg = "";
+include 'db_connect.php';
+$msg  = '';
+$type = 'error';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $email = $_POST["email"];
-  $new_password = md5($_POST["new_password"]); // Use md5 only if already used
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email        = $conn->real_escape_string(trim($_POST['email'] ?? ''));
+    $new_password = md5($_POST['new_password'] ?? '');
 
-  $sql = "UPDATE admin_users SET password='$new_password' WHERE email='$email'";
-  $result = $conn->query($sql);
+    $conn->query("UPDATE admin_users SET password='$new_password' WHERE email='$email'");
 
-  if ($conn->affected_rows > 0) {
-    $msg = "Password has been reset successfully. <a href='admin_login.php'>Login Now</a>";
-  } else {
-    $msg = "Email not found or password update failed.";
-  }
+    if ($conn->affected_rows > 0) {
+        $msg  = '✅ Password reset successfully. <a href="admin_login.php">Login Now</a>';
+        $type = 'success';
+    } else {
+        $msg = '⚠️ Email not found or no change was made.';
+    }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Reset Password</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-      width: 300px;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-    }
-    .msg {
-      color: green;
-      text-align: center;
-    }
-    .error {
-      color: red;
-      text-align: center;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password – UIU</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="box">
-    <h2>Reset Password</h2>
-    <form method="post">
-      <input type="email" name="email" placeholder="Enter your admin email" required />
-      <input type="password" name="new_password" placeholder="New Password" required />
+<body class="glass-page">
+  <div class="back-home"><a href="admin_login.php">&#8592; Back to Login</a></div>
+
+  <div class="glass-box">
+    <h2>🔒 Reset Password</h2>
+    <?php if ($msg): ?>
+      <div class="<?= $type === 'success' ? 'message' : 'error' ?>"><?= $msg ?></div>
+    <?php endif; ?>
+    <form method="post" action="">
+      <input type="email"    name="email"        placeholder="Admin Email"   required>
+      <input type="password" name="new_password" placeholder="New Password"  required>
       <button type="submit">Reset Password</button>
     </form>
-    <div class="<?= strpos($msg, 'successfully') !== false ? 'msg' : 'error' ?>">
-      <?= $msg ?>
-    </div>
   </div>
 </body>
 </html>

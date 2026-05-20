@@ -1,135 +1,63 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-  header("Location: admin_login.php");
-  exit();
-}
-
+if (!isset($_SESSION['admin_logged_in'])) { header('Location: admin_login.php'); exit(); }
 include 'db_connect.php';
 
-// Handle delete request
 if (isset($_GET['delete_id'])) {
-  $delete_id = $_GET['delete_id'];
-  
-  // Prepare DELETE query to remove the application
-  $sql = "DELETE FROM applications WHERE id = ?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $delete_id);
-
-  // Execute the query
-  if ($stmt->execute()) {
-    echo "<script>alert('Application deleted successfully.'); window.location.href = 'view_applications.php';</script>";
-  } else {
-    echo "<script>alert('Error deleting application.');</script>";
-  }
+    $del_id = (int)$_GET['delete_id'];
+    $stmt   = $conn->prepare("DELETE FROM applications WHERE id=?");
+    $stmt->bind_param('i', $del_id);
+    $stmt->execute();
+    $stmt->close();
+    header('Location: view_applications.php');
+    exit();
 }
 
-$sql = "SELECT * FROM applications ORDER BY submitted_at DESC";
-$result = $conn->query($sql);
+$result = $conn->query("SELECT * FROM applications ORDER BY submitted_at DESC");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>View Applications</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      background: #f2f2f2;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-    }
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ccc;
-    }
-    th {
-      background-color: #0066cc;
-      color: white;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-    .back-button {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .back-button a {
-      padding: 10px 20px;
-      background-color: #0066cc;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .back-button a:hover {
-      background-color: #004999;
-    }
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-      padding: 5px 10px;
-      border: none;
-      cursor: pointer;
-    }
-    .delete-btn:hover {
-      background-color: #c82333;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications – UIU Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="admin-table.css">
 </head>
 <body>
-
-<h2>Submitted Applications</h2>
-
-<?php if ($result->num_rows > 0): ?>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Full Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Program</th>
-    <th>Message</th>
-    <th>Submitted At</th>
-    <th>Actions</th>
-  </tr>
-  <?php while($row = $result->fetch_assoc()): ?>
-    <tr>
-      <td><?= $row["id"] ?></td>
-      <td><?= htmlspecialchars($row["fullname"]) ?></td>
-      <td><?= htmlspecialchars($row["email"]) ?></td>
-      <td><?= htmlspecialchars($row["phone"]) ?></td>
-      <td><?= htmlspecialchars($row["program"]) ?></td>
-      <td><?= nl2br(htmlspecialchars($row["message"])) ?></td>
-      <td><?= $row["submitted_at"] ?></td>
-      <td>
-        <!-- Delete Button -->
-        <a href="view_applications.php?delete_id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this application?');">
-          <button class="delete-btn">Delete</button>
-        </a>
-      </td>
-    </tr>
-  <?php endwhile; ?>
-</table>
-<?php else: ?>
-  <p>No applications found.</p>
-<?php endif; ?>
-
-<div class="back-button">
-  <a href="admin_dashboard.php">Back to Dashboard</a>
+<div class="admin-wrap">
+  <h2>📄 Submitted Applications</h2>
+  <div class="back-row" style="margin-bottom:16px;">
+    <a href="admin_dashboard.php" class="btn btn-back">⬅ Dashboard</a>
+  </div>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Program</th><th>Message</th><th>Submitted</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <?php if ($result && $result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+              <td><?= (int)$row['id'] ?></td>
+              <td><?= htmlspecialchars($row['fullname']) ?></td>
+              <td><?= htmlspecialchars($row['email']) ?></td>
+              <td><?= htmlspecialchars($row['phone']) ?></td>
+              <td><?= htmlspecialchars($row['program']) ?></td>
+              <td><?= nl2br(htmlspecialchars(mb_substr($row['message'], 0, 80))) ?>…</td>
+              <td><?= htmlspecialchars($row['submitted_at']) ?></td>
+              <td>
+                <a class="btn btn-delete" href="view_applications.php?delete_id=<?= (int)$row['id'] ?>"
+                   onclick="return confirm('Delete this application?')">Delete</a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr><td colspan="8" style="text-align:center">No applications found.</td></tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
 </div>
-
 </body>
 </html>
-
-<?php $conn->close(); ?>

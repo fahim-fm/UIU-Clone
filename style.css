@@ -1,1275 +1,906 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: sans-serif;
-  }
-  
-  /* Top Bar */
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1a0e0e;
-    color: white;
-    padding: 10px 20px;
-  }
-  
-  .top-links a {
-    color: white;
-    margin: 0 8px;
-    font-size: 14px;
-    text-decoration: none;
-  }
-  
-  .search input {
-    padding: 5px;
-  }
-  
-  .search button {
-    background: orange;
-    border: none;
-    padding: 6px 12px;
-    color: white;
-    cursor: pointer;
-  }
-  
-  /* Header and Nav */
-  header {
-    display: flex;
-    align-items: center;
-    background: #1d62b6;
-    padding: 10px 20px;
-  }
-  
-  .logo img {
-    height: 50px;
-    margin-right: 30px;
-  }
-  
-  .main-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 12px;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  /* Slideshow */
-  .slideshow {
-    position: relative;
-    width: 100vw;
-    height: 80vh;
-    overflow: hidden;
-  }
-  
-  .slideshow input[type="radio"] {
-    display: none;
-  }
-  
-  .slides {
-    display: flex;
-    width: 300vw;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .slide {
-    width: 100vw;
-    height: 100%;
-    flex-shrink: 0;
-  }
-  
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* Slide Control */
-  #slide1:checked ~ .slides { transform: translateX(0vw); }
-  #slide2:checked ~ .slides { transform: translateX(-100vw); }
-  #slide3:checked ~ .slides { transform: translateX(-200vw); }
-  
-  /* Arrows */
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 32px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-    z-index: 10;
-  }
-  
-  .arrow label {
-    display: none;
-    cursor: pointer;
-  }
-  
-  .left-arrow { left: 10px; }
-  .right-arrow { right: 10px; }
-  
-  #slide1:checked ~ .left-arrow .to-s3,
-  #slide2:checked ~ .left-arrow .to-s1,
-  #slide3:checked ~ .left-arrow .to-s2 {
-    display: inline-block;
-  }
-  #slide1:checked ~ .right-arrow .to-s2,
-  #slide2:checked ~ .right-arrow .to-s3,
-  #slide3:checked ~ .right-arrow .to-s1 {
-    display: inline-block;
-  }
-  
-  /* Hero Content */
-  .hero-content {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    z-index: 5;
-  }
-  .hero-content h1 {
-    font-size: 36px;
-    margin: 10px 0;
-  }
-  .hero-content button {
-    background: orange;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  /* About Section */
-  .about-section {
-    background: #ffffff;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .about-section h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: #233142;
-  }
-  .about-section p {
-    max-width: 800px;
-    margin: 0 auto 20px;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  .about-section button {
-    background: orange;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  /* Admission Section */
-  .admission-section {
-    background: #f3f3f3;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .admission-section h2 {
-    font-size: 26px;
-    color: #233142;
-    margin-bottom: 20px;
-  }
-  .admission-section p {
-    max-width: 900px;
-    margin: 0 auto 30px;
-    font-size: 16px;
-  }
-  .admission-cards {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .admission-cards .card {
-    background: #fff;
-    width: 280px;
-    padding: 15px;
-    text-align: left;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-  }
-  .admission-cards .card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  .admission-cards .card h4 {
-    margin-bottom: 8px;
-    color: #233142;
-  }
-  .admission-cards .card p {
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  .admission-cards .card button {
-    background: orange;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .more-admission {
-    margin-top: 20px;
-  }
-  .more-admission button {
-    background: orange;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  /* Recognition Section */
-  .recognition-section {
-    background: #eaf2f5;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .recognition-section h2 {
-    font-size: 26px;
-    color: #233142;
-    margin-bottom: 20px;
-  }
-  .recognition-section p {
-    max-width: 900px;
-    margin: 0 auto;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-/* Notices Section */
-.notices {
-    background: #f9f9f9;
-    padding: 50px 20px;
-    text-align: center;
-    
-  }
-  
-  .container {
-    max-width: 1000px;
-    margin: auto;
-  }
-  
-  .notices h2 {
-    font-size: 26px;
-    color: #233142;
-    margin-bottom: 10px;
-  }
-  
-  .notice-description {
-    font-size: 1rem;
-    color: #000000;
-    margin-bottom: 30px;
-  }
-  
-  .notice-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .notice-item {
-    display: flex;
-    background: #08ddf95c;
-    padding: 15px 20px;
-    border-left: 4px solid #d63031;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  }
-  
-  .notice-date {
-    min-width: 60px;
-    text-align: center;
-    padding: 10px 20px;
-    background: #144255;
-    margin-right: 20px;
-    color: #d63031;
-  }
-  
-  .notice-date .month {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  
-  .notice-date .day {
-    font-size: 1.2rem;
-  }
-  
-  .notice-content .date-full {
-    color: #888;
-    font-size: 0.9rem;
-  }
-  
-  .notice-content h4 {
-    font-size: 1.05rem;
-    color: #f8f5f5;
-    margin-top: 5px;
-  }
-  
-  .notice-footer {
-    margin-top: 20px;
-   
-  }
-  
-  .view-all {
-    background: orange;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .view-all:hover {
-    text-decoration: underline;
-  }
-  .events-section {
-    text-align: center;
-    max-width: 1200px;
-    margin: auto;
-    padding: 60px 20px;
-    background-color: #f0f8ff;
-  }
-  
-  .events-section h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-  }
-  
-  .events-section p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 40px;
-  }
-  
-  .event-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  
-  .event-card {
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .event-card img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-  }
-  
-  .event-date {
-    background-color: #222;
-    color: #fff;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: left;
-  }
-  
-  .event-content {
-    padding: 15px;
-    text-align: left;
-  }
-  
-  .event-content span {
-    color: #f06b00;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  .event-content h4 {
-    margin-top: 5px;
-    font-size: 16px;
-    font-weight: normal;
-  }
-  
-  .explore-btn {
-    margin-top: 40px;
-  }
-  
-  .explore-btn button {
-    background-color: #f57c00;
-    color: #fff;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .explore-btn button:hover {
-    background-color: #e36400;
-  }
-  .follow-us {
-    text-align: center;
-    padding: 40px 20px 20px;
-  }
-  
-  .follow-us h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .social-icons a {
-    background-color: #f57c00;
-    color: white;
-    padding: 10px;
-    border-radius: 50%;
-    font-size: 18px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .uiu-footer {
-    background-color: #1a1a1a;
-    color: white;
-    position: relative;
-    padding: 40px 20px 40px;
-    margin-top: -60px;
-  }
-  
-  .footer-bg {
-    
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 200px;
-    width: 100%;
-    z-index: 0;
-  }
-  
-  .footer-content {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: space-around;
-    z-index: 1;
-  }
-  
-  .footer-column {
-    flex: 1 1 200px;
-  }
-  
-  .footer-column h4 {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ff8000;
-  }
-  
-  .footer-column ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-column ul li {
-    margin: 6px 0;
-  }
-  
-  .footer-column ul li a {
-    color: #eee;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .footer-column ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  .footer-logo {
-    width: 120px;
-    margin-bottom: 10px;
-  }
-  .footer-bottom {
-    background-color: #1a1a1a;
-    color: #ccc;
-    text-align: center;
-    padding: 20px 10px;
-    font-size: 16px;
-  }
-  
-  .footer-bottom p {
-    margin: 5px 0 10px;
-  }
-  
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .footer-links a {
-    color: #ff8000;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-links a:hover {
-    color: #ffffff;
-  }
-  
-  /* About Page Styles */
-.about {
-  padding: 40px;
-  text-align: center;
+/* ===================================================
+   UIU Clone – Responsive Stylesheet
+   Breakpoints: mobile (<480px) | tablet (<768px) | desktop
+   =================================================== */
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.about img.uiu-logo {
-  width: 500px;
-  margin: 20px 0;
+:root {
+  --blue:    #1d62b6;
+  --dark:    #1a0e0e;
+  --navy:    #233142;
+  --orange:  #f57c00;
+  --orange2: #ff9900;
+  --light:   #f3f3f3;
+  --white:   #ffffff;
+  --text:    #333333;
+  --shadow:  0 2px 8px rgba(0,0,0,0.1);
+  --radius:  8px;
 }
 
-.about-stats {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin: 40px 0;
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
-  padding: 20px 0;
-}
+html { scroll-behavior: smooth; }
 
-.about-approval {
-  background-color: #233142;
-  color: #fff;
-  padding: 20px;
-  margin: 40px 0;
-}
-
-.about-approval .btn-orange {
-  background-color: orange;
-  color: #fff;
-  padding: 10px 20px;
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
-}
-
-.vision-images, .mission-images {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.vision-images img, .mission-images img {
-  width: 300px;
-  height: auto;
-  border-radius: 10px;
-}
-
-.permanent-campus {
-  background-color: #eee;
-  padding: 40px;
-  margin-top: 40px;
-}
-
-/* Admission Page Styles */
-.admission-section {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-.admission-section .container {
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  text-align: center;
-}
-
-.admission-section h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-  color: #003366;
-}
-
-.admission-section p {
-  font-size: 18px;
-  margin-bottom: 30px;
-}
-
-.admission-banner img {
-  width: 50%;
-  border-radius: 10px;
-  margin-bottom: 40px;
-  
-}
-
-/* Stats */
-.admission-stats {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 60px;
-}
-
-.stat-box {
-  background: #f9f9f9;
-  color: #000000;
-  padding: 30px 20px;
-  border-radius: 10px;
-  width: 250px;
-  transition: transform 0.3s;
-}
-
-.stat-box:hover {
-  transform: translateY(-5px);
-}
-
-.stat-box h2 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.stat-box p {
+body {
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 16px;
+  color: var(--text);
+  background: #f5f5f5;
+  line-height: 1.6;
 }
 
-/* Programs Section */
-.programs-section {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  margin-bottom: 60px;
-}
+img { max-width: 100%; height: auto; display: block; }
+a   { color: inherit; }
 
-.undergraduate-programs,
-.graduate-programs {
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.top-bar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-}
-
-.program-text {
-  flex: 1;
-  text-align: left;
-}
-
-.program-text h2 {
-  font-size: 28px;
-  margin-bottom: 15px;
-  color: #003366;
-}
-
-.program-text p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.program-btn {
-  display: inline-block;
-  background: #ff9900;
-  color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.program-btn:hover {
-  background: #cc7a00;
-}
-
-.program-img img {
-  width: 400px;
-  border-radius: 10px;
-}
-
-/* Scholarship Section */
-.scholarship-section {
-  text-align: center;
-  background: #f0f8ff;
-  padding: 40px 20px;
-  border-radius: 10px;
-}
-
-.scholarship-section h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #003366;
-}
-
-.scholarship-section p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.scholarship-btn {
-  display: inline-block;
-  background: #ff9900;
-  color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.scholarship-btn:hover {
-  background: #cc7a00;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .admission-stats {
-    flex-direction: column;
-  }
-  .undergraduate-programs,
-  .graduate-programs {
-    flex-direction: column;
-  }
-  .program-img img {
-    width: 100%;
-  }
-}
-/* === Academic Page Styles === */
-.academic-section {
-  padding: 60px 20px;
-  background: #fff;
-  text-align: center;
-}
-
-.academic-section .container {
-  max-width: 1100px;
-  margin: auto;
-}
-
-.academic-section h1 {
-  font-size: 36px;
-  color: #000;
-  margin-bottom: 10px;
-}
-
-.academic-section p {
-  font-size: 18px;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.academic-banner img {
-  width: 100%;
-  max-width: 500px;
-  margin: 30px 0;
-}
-
-.academic-stats {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin: 40px 0;
-}
-
-.stat-box {
-  background: #099ecb;
-  padding: 20px;
-  border-top: 2px solid #000;
-  flex: 1;
-  min-width: 200px;
-}
-
-.stat-box h2 {
-  font-size: 28px;
-  color: #003366;
-}
-
-.stat-box p {
-  font-size: 16px;
-}
-
-.section-title {
-  font-size: 28px;
-  margin: 50px 0 20px;
-  color: #000;
-}
-
-.schools-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-bottom: 60px;
-}
-
-.schools-list span {
-  border-bottom: 3px solid #1ca0dc;
-  padding: 8px;
-  font-weight: 500;
-}
-
-.schools-list span:nth-child(3) {
-  border-color: #e91e63;
-}
-.schools-list span:nth-child(5) {
-  border-color: #ff5722;
-}
-
-.registration-note {
-  background: #003366;
-  color: #fff;
-  text-align: center;
-  padding: 70px 20px;
-}
-
-.policy-btn {
-  display: inline-block;
-  margin-top: 20px;
-  background: #f90;
-  color: #fff;
-  padding: 10px 25px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.policy-btn:hover {
-  background: #cc7a00;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .academic-stats {
-    flex-direction: column;
-  }
-}
-/* === Research Page Styles === */
-.research-section {
-  padding: 60px 20px;
-  background: #f9f9f9;
-  text-align: center;
-}
-.research-section h1 {
-  font-size: 36px;
-  color: #000;
-  margin-bottom: 10px;}
-
-.research-logo img {
-  max-width: 450px;
-  width: 100%;
-  margin: 30px 0;
-}
-
-.research-stats {
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
-  padding: 20px 0;
-  margin-bottom: 40px;
-}
-
-.research-stats h2 {
-  font-size: 32px;
-  color: #003366;
-}
-
-.research-stats p {
-  font-size: 16px;
-}
-
-.research-block {
-  margin-bottom: 60px;
-}
-
-.research-block h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #000;
-}
-
-.research-description {
-  font-size: 16px;
-  margin-bottom: 30px;
-  color: #444;
-}
-
-.research-flex {
-  display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.research-flex.reverse {
-  flex-direction: row-reverse;
-}
-
-.research-flex img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.research-text-box {
-  background: #eaeaea;
-  padding: 20px;
-  max-width: 500px;
-  text-align: left;
-}
-
-.research-text-box h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.research-text-box p {
-  font-size: 15px;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.btn-orange {
-  display: inline-block;
-  background: #f7941e;
+  gap: 6px;
+  background: var(--dark);
   color: #fff;
-  padding: 10px 20px;
-  font-weight: bold;
+  padding: 7px 20px;
+  font-size: 13px;
+}
+
+.left-icons a { color: #fff; text-decoration: none; font-size: 18px; }
+
+.top-links { display: flex; flex-wrap: wrap; gap: 4px; }
+.top-links a {
+  color: #fff;
   text-decoration: none;
-  border-radius: 5px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  transition: color .2s;
 }
+.top-links a:hover { color: var(--orange); }
 
-.btn-orange:hover {
-  background: #cc6a00;
+.search { display: flex; gap: 0; }
+.search input {
+  padding: 5px 10px;
+  border: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+  font-size: 13px;
+  outline: none;
+  width: 130px;
 }
-
-@media (max-width: 768px) {
-  .research-flex {
-    flex-direction: column !important;
-  }
-
-  .research-text-box {
-    text-align: center;
-  }
-}
-/* === Notices Page === */
-.notices-section {
-  padding: 60px 20px;
-  background: #fff;
-}
-
-.notice-intro {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.notice-text {
-  flex: 1;
-}
-
-.notice-text p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333;
-}
-
-.notice-icons img {
-  width: 24px;
-  margin-right: 10px;
+.search button {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 0 var(--radius) var(--radius) 0;
   cursor: pointer;
+  font-size: 13px;
+  transition: background .2s;
+}
+.search button:hover { background: #e36400; }
+
+/* ============================================================
+   HEADER / NAV
+   ============================================================ */
+header {
+  display: flex;
+  align-items: center;
+  background: var(--blue);
+  padding: 10px 20px;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.notice-img img {
-  max-width: 500px;
-  border-radius: 5px;
+.logo img { height: 48px; width: auto; }
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-left: auto;
 }
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--radius);
+  transition: background .2s;
+}
+.main-nav a:hover { background: rgba(255,255,255,0.18); }
+
+/* Hamburger – hidden on desktop */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+}
+.nav-toggle span {
+  display: block;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+
+/* ============================================================
+   HERO SLIDESHOW
+   ============================================================ */
+.slideshow {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: clamp(180px, 52vw, 580px);
+}
+
+.slideshow input[type="radio"] { display: none; }
+
+.slides {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+.slide { width: 33.333%; height: 100%; flex-shrink: 0; }
+.slide img { width: 100%; height: 100%; object-fit: cover; }
+
+#slide1:checked ~ .slides { transform: translateX(0); }
+#slide2:checked ~ .slides { transform: translateX(-33.333%); }
+#slide3:checked ~ .slides { transform: translateX(-66.666%); }
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  padding: 8px 12px;
+  z-index: 10;
+  border-radius: var(--radius);
+  line-height: 1;
+}
+.arrow label { display: none; cursor: pointer; }
+.left-arrow  { left: 10px; }
+.right-arrow { right: 10px; }
+
+#slide1:checked ~ .left-arrow  .to-s3,
+#slide2:checked ~ .left-arrow  .to-s1,
+#slide3:checked ~ .left-arrow  .to-s2,
+#slide1:checked ~ .right-arrow .to-s2,
+#slide2:checked ~ .right-arrow .to-s3,
+#slide3:checked ~ .right-arrow .to-s1 { display: inline-block; }
+
+.hero-content {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  z-index: 5;
+  width: 88%;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.hero-content p   { font-size: clamp(12px, 2vw, 18px); margin-bottom: 6px; }
+.hero-content h1  { font-size: clamp(18px, 3.5vw, 40px); margin-bottom: 14px; font-weight: 700; }
+.hero-content button {
+  background: var(--orange);
+  color: #fff;
+  padding: 10px 22px;
+  border: none;
+  font-size: clamp(13px, 1.5vw, 16px);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background .2s, transform .2s;
+}
+.hero-content button:hover { background: #e36400; transform: translateY(-2px); }
+
+/* ============================================================
+   SECTION BASE
+   ============================================================ */
+.section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* ============================================================
+   ABOUT SECTION (homepage)
+   ============================================================ */
+.about-section {
+  background: var(--white);
+  padding: 50px 20px;
+  text-align: center;
+}
+.about-section h2 { font-size: clamp(20px,3vw,28px); margin-bottom: 14px; color: var(--navy); }
+.about-section p  { max-width: 800px; margin: 0 auto 18px; font-size: 16px; }
+.about-section button {
+  background: var(--orange); color: #fff;
+  border: none; padding: 10px 20px;
+  cursor: pointer; border-radius: var(--radius); font-size: 14px;
+  transition: background .2s;
+}
+.about-section button:hover { background: #e36400; }
+
+/* ============================================================
+   ADMISSION SECTION (homepage)
+   ============================================================ */
+.admission-section {
+  background: var(--light);
+  padding: 50px 20px;
+  text-align: center;
+}
+.admission-section h2 { font-size: clamp(20px,3vw,28px); color: var(--navy); margin-bottom: 14px; }
+.admission-section > p { max-width: 900px; margin: 0 auto 26px; font-size: 16px; }
+
+.admission-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.admission-cards .card {
+  background: var(--white);
+  width: clamp(240px, 28vw, 300px);
+  padding: 14px;
+  text-align: left;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+}
+.admission-cards .card img {
+  width: 100%; height: 155px;
+  object-fit: cover; border-radius: 4px; margin-bottom: 10px;
+}
+.admission-cards .card h4 { margin-bottom: 8px; color: var(--navy); }
+.admission-cards .card p  { font-size: 14px; margin-bottom: 10px; flex: 1; }
+.admission-cards .card button {
+  background: var(--orange); color: #fff;
+  border: none; padding: 7px 14px;
+  cursor: pointer; font-size: 14px;
+  border-radius: var(--radius); align-self: flex-start;
+  transition: background .2s;
+}
+.admission-cards .card button:hover { background: #e36400; }
+
+.more-admission { margin-top: 22px; }
+.more-admission button {
+  background: var(--orange); color: #fff;
+  padding: 10px 20px; border: none;
+  cursor: pointer; font-size: 14px; border-radius: var(--radius);
+}
+
+/* ============================================================
+   RECOGNITION
+   ============================================================ */
+.recognition-section {
+  background: #eaf2f5; padding: 50px 20px; text-align: center;
+}
+.recognition-section h2 { font-size: clamp(20px,3vw,28px); color: var(--navy); margin-bottom: 14px; }
+.recognition-section p  { max-width: 900px; margin: 0 auto; font-size: 16px; }
+
+/* ============================================================
+   NOTICES SECTION
+   ============================================================ */
+.notices {
+  background: #f9f9f9;
+  padding: 50px 20px;
+  text-align: center;
+}
+.notices-section {
+  padding: 50px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+.notices h2, .notices-section h1 {
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--navy); margin-bottom: 10px;
+}
+.notice-description { font-size: 1rem; color: #333; margin-bottom: 26px; }
 
 .notice-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px));
-  gap: 20px;
-}
-
-.notice-item {
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 5px;
-}
-
-.notice-item span {
-  font-size: 14px;
-  color: #555;
-  display: block;
-  padding: 10px 10px;
-  margin-bottom: 5px;
-}
-
-.notice-item p {
-  font-size: 15px;
-  padding: 10px 10px;
-  color: #003366;
-  margin: 0;
-}
-
-.pagination {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.pagination span,
-.pagination a {
-  margin: 0 5px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.pagination .current {
-  background-color: #003366;
-  color: #fff;
-}
-
-.pagination a {
-  background-color: #ddd;
-  color: #000;
-}
-
-.pagination a:hover {
-  background-color: #bbb;
-}
-.notice-item, .event-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  background: #08ddf951;
-}
-
-.notice-item img, .event-item img {
-  margin-top: 10px;
-  max-width: 100%;
-  border-radius: 4px;
-}
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-}
-
-.ccontact-section {
-  background-image: url('image/BC4.jpg');
-  background-size: cover;
-  color: rgb(39, 11, 11);
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.ccontact-section h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
-
-.address {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.ccontact-box {
-  display: inline-block;
-  background-color: #FFA500;
-  color: black;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  margin-top: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
   text-align: left;
 }
-
-.fform-section {
-  padding: 70px 20px;
-  background-color: #ffffff;
-}
-
-.fform-box {
-  max-width: 600px;
-  margin: auto;
-  background-color: #f9f9f9;
-  padding: 60px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
-}
-
-.fform-box h2 {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.fform-box input[type="text"],
-.fform-box input[type="email"],
-.fform-box textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.fform-box button {
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  padding: 12px;
-  width: 100%;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.fform-box button:hover {
-  background-color: #1a252f;
-}
-
-.message {
-  text-align: center;
-  margin-top: 15px;
-  color: green;
-  font-weight: bold;
-}
-
-.center-text {
-  text-align: center;
-  margin-bottom: 20px; /* Adds space below the paragraph */
-}
-.login-box {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
-  width: 300px;
-}
-h2 {
-  text-align: center;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-}
-.tuition-section {
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: auto;
+.notice-item {
   background: #fff;
+  border: 1px solid #dce3ea;
+  border-left: 4px solid var(--blue);
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
+.notice-item span { font-size: 13px; color: #555; display: block; margin-bottom: 6px; }
+.notice-item p    { font-size: 15px; color: var(--navy); margin: 0 0 8px; }
+.notice-item a {
+  display: inline-block; background: var(--blue);
+  color: #fff; padding: 4px 10px;
+  font-size: 13px; border-radius: 4px; text-decoration: none;
+}
+.notice-item a:hover { background: #1550a0; }
 
-.tuition-heading {
+/* Notices page layout */
+.notice-intro { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 34px; text-align: left; }
+.notice-text  { flex: 1 1 260px; }
+.notice-text p { font-size: 16px; line-height: 1.7; color: #333; }
+.notice-img   { flex: 0 1 380px; }
+.notice-img img { width: 100%; border-radius: var(--radius); }
+
+/* ============================================================
+   EVENTS SECTION
+   ============================================================ */
+.events-section {
+  background: #f0f8ff;
+  padding: 60px 20px;
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
+}
+.events-section h2 { font-size: clamp(22px,3vw,36px); margin-bottom: 10px; }
+.events-section > p {
+  font-size: 16px; color: #333; margin-bottom: 34px;
+  max-width: 700px; margin-left: auto; margin-right: auto;
 }
 
-.tuition-logo {
-  text-align: center;
-  margin-bottom: 30px;
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  text-align: left;
+}
+.event-item {
+  background: #fff;
+  border-radius: var(--radius); padding: 16px;
+  box-shadow: var(--shadow); border: 1px solid #e0eaf3;
+}
+.event-item h3 { font-size: 16px; color: var(--navy); margin-bottom: 6px; }
+.event-item span { font-size: 13px; color: #888; display: block; margin-bottom: 8px; }
+.event-item p    { font-size: 14px; line-height: 1.6; }
+.event-item img  { width: 100%; max-height: 200px; object-fit: cover; border-radius: 4px; margin-top: 10px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.uiu-footer { background: #1a1a1a; color: #eee; padding: 44px 20px 0; }
+
+.footer-content {
+  display: flex; flex-wrap: wrap;
+  gap: 26px; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto 28px;
+}
+.footer-column { flex: 1 1 150px; min-width: 130px; }
+
+.footer-column h4 {
+  margin-bottom: 10px; padding-bottom: 5px;
+  border-bottom: 1px solid var(--orange);
+  font-size: 14px; color: #fff;
+}
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin: 5px 0; }
+.footer-column ul li a { color: #ccc; text-decoration: none; font-size: 13px; transition: color .2s; }
+.footer-column ul li a:hover { color: var(--orange); }
+
+.footer-logo { width: 110px; margin-bottom: 12px; }
+
+.social-icons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.social-icons a {
+  background: var(--orange); color: #fff;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+.social-icons a:hover { background: #e36400; transform: scale(1.1); }
+
+.footer-bottom {
+  background: #111; text-align: center;
+  padding: 18px 20px; font-size: 14px; color: #aaa;
+}
+.footer-bottom p { margin-bottom: 8px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.footer-links a { color: var(--orange); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: #fff; }
+
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+.about { padding: 40px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+.about h1, .about h2 { color: var(--navy); margin: 24px 0 12px; font-size: clamp(20px,3vw,30px); }
+.about p { font-size: 16px; line-height: 1.7; margin-bottom: 14px; }
+
+.about img.uiu-logo { width: min(500px, 90%); margin: 20px auto; }
+
+.about-stats {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 28px;
+  border-top: 2px solid #000; border-bottom: 2px solid #000;
+  padding: 20px 0; margin: 28px 0;
+}
+.about-stats div { text-align: center; }
+
+.about-approval {
+  background: var(--navy); color: #fff;
+  padding: 24px 20px; margin: 28px 0; border-radius: var(--radius);
+}
+.about-approval p { color: #eee; margin-bottom: 12px; }
+.about-approval .btn-orange {
+  background: var(--orange); color: #fff;
+  padding: 10px 20px; border-radius: var(--radius);
+  text-decoration: none; display: inline-block;
 }
 
-.tuition-logo img {
-  max-width: 200px;
+.vision-images, .mission-images {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 14px; margin: 22px 0;
+}
+.vision-images img, .mission-images img { width: min(300px, 90%); border-radius: var(--radius); }
+
+.permanent-campus {
+  background: #eee; padding: 28px 22px;
+  border-radius: var(--radius); margin-top: 28px; text-align: left;
 }
 
-.table-container {
-  overflow-x: auto;
-  margin-bottom: 40px;
+/* ============================================================
+   ADMISSION PAGE
+   ============================================================ */
+.admission-section.page-section { padding: 60px 20px; background: #fff; }
+
+.admission-section h1 { font-size: clamp(24px,4vw,36px); margin-bottom: 14px; color: #003366; }
+.admission-banner img { width: min(50%, 480px); border-radius: var(--radius); margin: 0 auto 36px; }
+
+.admission-stats {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 20px; margin-bottom: 48px;
+}
+.stat-box {
+  background: #f9f9f9; padding: 26px 20px;
+  border-radius: var(--radius); min-width: 200px;
+  transition: transform .3s; box-shadow: var(--shadow);
+}
+.stat-box:hover { transform: translateY(-5px); }
+.stat-box h2 { font-size: 28px; color: #003366; margin-bottom: 8px; }
+.stat-box p  { font-size: 15px; }
+
+.programs-section { display: flex; flex-direction: column; gap: 48px; margin-bottom: 48px; }
+.undergraduate-programs,
+.graduate-programs {
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: space-between; gap: 26px;
+}
+.program-text { flex: 1 1 280px; text-align: left; }
+.program-text h2 { font-size: clamp(20px,3vw,28px); color: #003366; margin-bottom: 12px; }
+.program-img { flex: 0 1 380px; }
+.program-img img { width: 100%; border-radius: var(--radius); }
+
+.program-btn {
+  display: inline-block; background: var(--orange2);
+  color: #fff; padding: 10px 22px;
+  text-decoration: none; border-radius: var(--radius); transition: background .2s;
+}
+.program-btn:hover { background: #cc7a00; }
+
+.scholarship-section {
+  background: #f0f8ff; padding: 40px 20px;
+  border-radius: var(--radius); text-align: center;
+}
+.scholarship-section h2 { font-size: clamp(20px,3vw,28px); color: #003366; margin-bottom: 14px; }
+.scholarship-btn {
+  display: inline-block; background: var(--orange2);
+  color: #fff; padding: 10px 22px;
+  text-decoration: none; border-radius: var(--radius);
 }
 
-.tuition-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-  font-size: 14px;
+/* ============================================================
+   ACADEMIC PAGE
+   ============================================================ */
+.academic-section { padding: 60px 20px; background: #fff; text-align: center; }
+.academic-section .container { max-width: 1100px; margin: auto; }
+.academic-section h1 { font-size: clamp(24px,4vw,36px); color: #000; margin-bottom: 10px; }
+.academic-section p  { font-size: 16px; color: #333; margin-bottom: 26px; }
+.academic-banner img { max-width: 500px; width: 90%; margin: 24px auto; }
+
+.academic-stats {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 20px; margin: 34px 0;
+}
+.academic-stats .stat-box { background: #099ecb; flex: 1 1 200px; max-width: 260px; }
+.academic-stats .stat-box h2 { color: #003366; }
+
+.section-title { font-size: clamp(20px,3vw,28px); margin: 38px 0 16px; }
+.schools-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px; margin-bottom: 48px;
+}
+.schools-list span { border-bottom: 3px solid #1ca0dc; padding: 8px; font-weight: 500; display: block; }
+
+.registration-note { background: #003366; color: #fff; text-align: center; padding: 60px 20px; }
+.policy-btn {
+  display: inline-block; margin-top: 18px;
+  background: var(--orange2); color: #fff;
+  padding: 10px 26px; text-decoration: none;
+  font-weight: bold; border-radius: var(--radius);
+}
+.policy-btn:hover { background: #cc7a00; }
+
+/* ============================================================
+   RESEARCH PAGE
+   ============================================================ */
+.research-section { padding: 60px 20px; background: #f9f9f9; text-align: center; }
+.research-section h1 { font-size: clamp(24px,4vw,36px); color: #000; margin-bottom: 10px; }
+.research-logo img { max-width: 400px; margin: 22px auto; }
+
+.research-stats { border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 20px 0; margin-bottom: 34px; }
+.research-stats h2 { font-size: 30px; color: #003366; }
+.research-stats p  { font-size: 16px; }
+
+.research-block { margin-bottom: 48px; }
+.research-block h2 { font-size: clamp(20px,3vw,28px); margin-bottom: 8px; }
+.research-description { font-size: 16px; color: #444; margin-bottom: 24px; }
+
+.research-flex { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 26px; }
+.research-flex.reverse { flex-direction: row-reverse; }
+.research-flex img { width: min(400px, 100%); border-radius: 5px; }
+
+.research-text-box { background: #eaeaea; padding: 22px; max-width: 500px; text-align: left; border-radius: var(--radius); }
+.research-text-box h3 { font-size: 20px; margin-bottom: 8px; }
+.research-text-box p  { font-size: 15px; margin-bottom: 18px; color: #333; }
+
+.btn-orange {
+  display: inline-block; background: #f7941e;
+  color: #fff; padding: 10px 20px;
+  font-weight: bold; text-decoration: none; border-radius: 5px;
+  transition: background .2s;
+}
+.btn-orange:hover { background: #cc6a00; }
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+.ccontact-section {
+  background: url('image/BC4.jpg') center/cover no-repeat;
+  color: #fff; text-align: center;
+  padding: 60px 20px; position: relative;
+}
+.ccontact-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(0,0,0,0.38);
+}
+.ccontact-section > * { position: relative; z-index: 1; }
+.ccontact-section h1 { font-size: clamp(22px,4vw,36px); margin-bottom: 14px; color: #fff; }
+.address { font-size: 17px; margin-bottom: 16px; }
+
+.ccontact-box {
+  display: inline-block; background: var(--orange);
+  color: #000; padding: 20px 24px;
+  border-radius: var(--radius); text-align: left;
+  max-width: 440px; width: 90%;
+}
+.ccontact-box p { margin-bottom: 6px; }
+
+.fform-section { padding: 60px 20px; background: #fff; }
+.fform-box {
+  max-width: 600px; margin: 0 auto;
+  background: #f9f9f9; padding: 40px 36px;
+  border-radius: 10px; box-shadow: 0 0 12px #ccc;
+}
+.fform-box h2 { margin-bottom: 20px; color: #333; font-size: clamp(18px,3vw,24px); }
+.fform-box input, .fform-box textarea {
+  width: 100%; padding: 12px; margin-bottom: 14px;
+  border: 1px solid #ccc; border-radius: 5px;
+  font-size: 15px; font-family: inherit;
+}
+.fform-box textarea { resize: vertical; min-height: 110px; }
+.fform-box button {
+  background: #2c3e50; color: #fff;
+  border: none; padding: 13px;
+  width: 100%; font-size: 16px;
+  border-radius: 5px; cursor: pointer; transition: background .2s;
+}
+.fform-box button:hover { background: #1a252f; }
+.message { text-align: center; margin-top: 14px; color: green; font-weight: bold; }
+.center-text { text-align: center; margin-bottom: 18px; }
+
+/* ============================================================
+   FEES PAGE
+   ============================================================ */
+.tuition-section { padding: 40px 20px; max-width: 1200px; margin: auto; background: #fff; }
+.tuition-heading { text-align: center; font-size: clamp(22px,3vw,32px); margin-bottom: 18px; }
+.tuition-logo { text-align: center; margin-bottom: 26px; }
+.tuition-logo img { max-width: 200px; margin: 0 auto; }
+.table-container { overflow-x: auto; margin-bottom: 34px; -webkit-overflow-scrolling: touch; }
+.tuition-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tuition-table th, .tuition-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+.tuition-table thead { background: #f7f7f7; font-weight: bold; }
+
+.scholarship-box { background: #f3f3f3; padding: 22px; border-left: 5px solid var(--orange); margin-bottom: 34px; border-radius: 0 var(--radius) var(--radius) 0; }
+.scholarship-box h4 { font-size: 17px; margin-bottom: 8px; }
+.learn-btn { display: inline-block; background: var(--orange); color: #fff; padding: 10px 20px; text-decoration: none; margin-top: 8px; border-radius: var(--radius); }
+
+.admission-notes h4 { margin-top: 18px; font-size: 16px; }
+.admission-notes ul  { margin-left: 20px; }
+
+.pdf-link { display: inline-block; background: #0066cc; color: #fff; padding: 8px 14px; margin-top: 8px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background .2s; }
+.pdf-link:hover { background: #004999; }
+
+/* ============================================================
+   GLASS PANEL PAGES (login / register / dashboard)
+   ============================================================ */
+.glass-page {
+  background: url('image/BC4.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
 }
 
-.tuition-table th,
-.tuition-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-.tuition-table thead {
-  background-color: #f7f7f7;
-  font-weight: bold;
-}
-
-.scholarship-box {
-  background-color: #f3f3f3;
-  padding: 25px;
-  border-left: 5px solid orange;
-  margin-bottom: 40px;
-}
-
-.scholarship-box h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.learn-btn {
-  display: inline-block;
-  background: orange;
+.glass-box {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 34px 30px;
+  width: min(420px, 92vw);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
   color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  margin-top: 10px;
+  animation: fadeIn .7s ease-in-out;
+}
+.glass-box h2 { text-align: center; font-size: clamp(20px,4vw,26px); margin-bottom: 20px; letter-spacing: 1px; }
+
+.glass-box input,
+.glass-box select {
+  width: 100%; padding: 12px; margin: 8px 0;
+  border: none; border-radius: 10px;
+  background: rgba(255,255,255,0.22);
+  color: #fff; font-size: 15px; outline: none; font-family: inherit;
+}
+.glass-box input::placeholder { color: #ddd; }
+.glass-box select option { color: #000; background: #fff; }
+
+.glass-box button {
+  width: 100%; padding: 12px; margin-top: 10px;
+  border: none; border-radius: 10px;
+  background: linear-gradient(135deg,#6a11cb,#2575fc);
+  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
+}
+.glass-box button:hover { transform: translateY(-3px); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
+
+.glass-box .links, .toggle-link { text-align: center; margin-top: 12px; }
+.glass-box a, .toggle-link a { color: #f0f0f0; text-decoration: none; font-size: 14px; }
+.glass-box a:hover, .toggle-link a:hover { color: #ffdede; }
+
+.glass-box .error   { color: #ffbaba; background: rgba(255,0,0,0.2); padding: 8px; margin-top: 12px; border-radius: 8px; text-align: center; font-size: 14px; }
+.glass-box .message { color: #fff; background: rgba(0,0,0,0.3); padding: 8px; margin-bottom: 10px; border-radius: 8px; text-align: center; font-size: 14px; }
+
+/* Back / Home buttons on glass pages */
+.back-home, .home-link { position: absolute; top: 20px; left: 20px; }
+.back-home a, .home-link a {
+  text-decoration: none; background: rgba(0,0,0,0.5);
+  color: #fff; padding: 9px 18px;
+  border-radius: 8px; font-size: 14px; font-weight: 600;
+  transition: background .3s;
+}
+.back-home a:hover, .home-link a:hover { background: rgba(0,0,0,0.7); }
+
+/* Admin dashboard */
+.admin-nav { display: flex; flex-direction: column; gap: 14px; }
+.admin-nav a {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  text-decoration: none; padding: 13px; border-radius: 12px;
+  font-weight: 600; font-size: 15px; color: #fff;
+  background: linear-gradient(135deg,#ff6a00,#ee0979);
+  transition: transform .3s, box-shadow .3s;
+}
+.admin-nav a:hover { transform: translateY(-3px); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
+
+.logout-btn { display: inline-block; margin-top: 22px; color: #fff; text-decoration: none; font-weight: 600; transition: color .2s; }
+.logout-btn:hover { color: #ffd6d6; }
+
+/* Student dashboard card */
+.dashboard {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  padding: 34px; width: min(380px, 92vw);
+  border-radius: 20px; box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  text-align: center; color: #fff;
+  animation: fadeIn .7s ease-in-out;
+}
+.dashboard img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; margin-bottom: 14px; }
+.dashboard h2 { font-size: 22px; margin-bottom: 10px; }
+.dashboard p  { font-size: 15px; margin: 5px 0; }
+
+a.edit-btn, a.logout-link {
+  display: inline-block; padding: 10px 18px;
+  border-radius: 8px; margin-top: 14px;
+  text-decoration: none; font-weight: 600; transition: all .3s;
+}
+a.edit-btn      { background: linear-gradient(135deg,#00bcd4,#2196f3); color: #fff; }
+a.edit-btn:hover { background: #0a74da; }
+a.logout-link   { background: linear-gradient(135deg,#f44336,#e53935); color: #fff; margin-left: 8px; }
+a.logout-link:hover { background: #c62828; }
+
+/* Edit profile form box */
+.form-box {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  padding: 30px; width: min(380px, 92vw);
+  border-radius: 20px; box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  text-align: center; color: #fff;
+  animation: fadeIn .7s ease-in-out;
+}
+.form-box h2 { font-size: clamp(18px,4vw,26px); letter-spacing: 1px; margin-bottom: 14px; }
+.form-box .msg { background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; margin-bottom: 12px; }
+.form-box img  { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; margin-bottom: 14px; }
+.form-box label { display: block; text-align: left; margin: 6px 0; font-weight: 600; }
+.form-box input, .form-box select {
+  width: 100%; padding: 10px; margin-bottom: 12px;
+  border: none; border-radius: 10px;
+  background: rgba(255,255,255,0.22);
+  color: #fff; font-size: 14px; outline: none; font-family: inherit;
+}
+.form-box input::placeholder { color: #ddd; }
+.form-box select option { color: #000; background: #fff; }
+.form-box button {
+  width: 100%; padding: 12px; border: none; border-radius: 10px;
+  background: linear-gradient(135deg,#6a11cb,#2575fc);
+  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
+}
+.form-box button:hover { transform: translateY(-3px); box-shadow: 0 5px 16px rgba(0,0,0,0.3); }
+.form-box .back-link { display: inline-block; margin-top: 14px; text-decoration: none; color: #fff; font-weight: 600; transition: color .2s; }
+.form-box .back-link:hover { color: #ffdede; }
+
+/* Apply Online container */
+.apply-container {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  max-width: 600px; width: 92%;
+  padding: 40px 36px;
+  border-radius: 18px; box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+  animation: fadeIn .8s ease-in-out; color: #fff;
+}
+.apply-container h2 { text-align: center; color: #fff; font-size: clamp(20px,3vw,28px); margin-bottom: 22px; }
+.apply-container input,
+.apply-container textarea,
+.apply-container select {
+  width: 100%; padding: 12px; margin-bottom: 14px;
+  border: none; border-radius: 10px;
+  background: linear-gradient(190deg,#6a11cb,#2575fc);
+  color: #fff; font-size: 15px; outline: none; font-family: inherit;
+}
+.apply-container input::placeholder,
+.apply-container textarea::placeholder { color: #ddd; }
+.apply-container select option { color: #000; background: #fff; }
+.apply-container button {
+  background: linear-gradient(135deg,#f804ec,#25fc90);
+  color: #fff; padding: 12px; border: none;
+  width: 100%; border-radius: 10px; font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: transform .3s, box-shadow .3s;
+}
+.apply-container button:hover { transform: translateY(-3px); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
+.apply-container .success { text-align: center; color: #b8ffb8; background: rgba(0,128,0,0.2); padding: 10px; margin-bottom: 14px; border-radius: 8px; }
+
+/* Pagination */
+.pagination { margin-top: 34px; text-align: center; }
+.pagination span, .pagination a {
+  margin: 0 4px; padding: 8px 13px;
+  border-radius: 4px; font-weight: bold;
+  text-decoration: none; display: inline-block;
+}
+.pagination .current { background: #003366; color: #fff; }
+.pagination a { background: #ddd; color: #000; }
+.pagination a:hover { background: #bbb; }
+
+/* Error / misc */
+.error { color: red; text-align: center; margin-top: 10px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.admission-notes h4 {
-  margin-top: 20px;
-  font-size: 16px;
+/* ============================================================
+   RESPONSIVE OVERRIDES
+   ============================================================ */
+
+/* Tablet ≤ 768px */
+@media (max-width: 768px) {
+  /* Hamburger */
+  .nav-toggle { display: flex; }
+  .main-nav {
+    display: none; flex-direction: column;
+    width: 100%; background: var(--blue);
+    padding: 8px 0; order: 3;
+  }
+  .main-nav.open { display: flex; }
+  .main-nav a {
+    padding: 11px 20px; font-size: 15px;
+    border-radius: 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .main-nav a:last-child { border-bottom: none; }
+
+  /* Top bar */
+  .top-bar { flex-direction: column; align-items: flex-start; padding: 8px 14px; }
+  .top-links { flex-wrap: wrap; }
+  .search input { width: 110px; }
+
+  /* Hero */
+  .hero-content h1 { font-size: clamp(16px,5vw,28px); }
+  .arrow { font-size: 20px; padding: 6px 10px; }
+
+  /* Admission page */
+  .admission-stats { flex-direction: column; align-items: center; }
+  .undergraduate-programs, .graduate-programs { flex-direction: column; }
+  .program-img img { width: 100%; }
+  .admission-banner img { width: 90%; }
+
+  /* Academic */
+  .academic-stats { flex-direction: column; align-items: center; }
+
+  /* Research */
+  .research-flex, .research-flex.reverse { flex-direction: column !important; }
+  .research-text-box { text-align: center; }
+
+  /* About */
+  .about img.uiu-logo { width: 90%; }
+  .about-stats { flex-direction: column; align-items: center; }
+
+  /* Notices */
+  .notice-intro { flex-direction: column; }
+  .notice-img   { flex: auto; }
+
+  /* Cards */
+  .admission-cards .card { width: 100%; max-width: 340px; }
+
+  /* Footer */
+  .footer-content { flex-direction: column; gap: 18px; }
+  .footer-column  { flex: none; width: 100%; }
+
+  /* Forms */
+  .fform-box { padding: 28px 18px; }
 }
 
-.admission-notes ul {
-  margin-left: 20px;
-}
-.pdf-link {
-  display: inline-block;
-  background-color: #0066cc;
-  color: #fff;
-  padding: 8px 14px;
-  margin-top: 8px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+/* Mobile ≤ 480px */
+@media (max-width: 480px) {
+  .logo img { height: 40px; }
+  header    { padding: 10px 12px; }
 
-.pdf-link:hover {
-  background-color: #004999;
-  text-decoration: underline;
+  .hero-content h1 { font-size: clamp(14px,6vw,22px); }
+  .hero-content p  { font-size: 12px; }
+
+  .about-section,
+  .admission-section,
+  .recognition-section,
+  .notices,
+  .events-section { padding: 36px 14px; }
+
+  .notice-grid { grid-template-columns: 1fr; }
+  .event-grid  { grid-template-columns: 1fr; }
+
+  .admission-cards { flex-direction: column; align-items: center; }
+  .admission-cards .card { width: 100%; }
+
+  .uiu-footer { padding: 28px 14px 0; }
+  .footer-bottom { padding: 16px 14px; }
+
+  .glass-box, .dashboard, .form-box { padding: 24px 16px; }
+
+  .apply-container { padding: 28px 18px; }
+
+  .fform-box { padding: 24px 14px; }
 }

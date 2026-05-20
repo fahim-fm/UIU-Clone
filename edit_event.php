@@ -1,92 +1,79 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-  header("Location: admin_login.php");
-  exit();
-}
-
+if (!isset($_SESSION['admin_logged_in'])) { header('Location: admin_login.php'); exit(); }
 include 'db_connect.php';
 
-$id = intval($_GET['id']);
-$event = $conn->query("SELECT * FROM events WHERE id=$id")->fetch_assoc();
+$id  = (int)($_GET['id'] ?? 0);
+$res = $conn->query("SELECT * FROM events WHERE id=$id");
+if (!$res || $res->num_rows === 0) { die('Event not found.'); }
+$event = $res->fetch_assoc();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $title = $_POST["title"];
-  $desc = $_POST["description"];
-  $date = $_POST["date"];
-  
-  // If a new image is uploaded
-  if (!empty($_FILES["image"]["name"])) {
-    $target_dir = "image/uploaded_event/";
-    $new_image = $target_dir . basename($_FILES["image"]["name"]);
-    move_uploaded_file($_FILES["image"]["tmp_name"], $new_image);
+$msg  = '';
+$type = '';
 
-    // Delete old image
-    if (!empty($event['image']) && file_exists($event['image'])) {
-      unlink($event['image']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $conn->real_escape_string(trim($_POST['title']       ?? ''));
+    $desc  = $conn->real_escape_string(trim($_POST['description'] ?? ''));
+    $date  = $conn->real_escape_string($_POST['date']             ?? '');
+    $image = $event['image'];
+
+    if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === 0) {
+        $allowed = ['jpg','jpeg','png','gif','webp'];
+        $ext     = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowed, true)) {
+            $dir  = 'image/uploaded_event/';
+            if (!is_dir($dir)) mkdir($dir, 0755, true);
+            $dest = $dir . time() . '_' . basename($_FILES['image']['name']);
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
+                if (!empty($image) && file_exists($image)) unlink($image);
+                $image = $dest;
+            } else { $msg = '❌ Upload failed.'; $type = 'error'; }
+        } else { $msg = '⚠️ Only JPG/PNG/GIF/WEBP allowed.'; $type = 'error'; }
     }
 
-    $conn->query("UPDATE events SET title='$title', description='$desc', date='$date', image='$new_image' WHERE id=$id");
-  } else {
-    $conn->query("UPDATE events SET title='$title', description='$desc', date='$date' WHERE id=$id");
-  }
-
-  header("Location: manage_events.php");
-  exit();
+    if (empty($msg) && $title && $date) {
+        $img = $conn->real_escape_string($image);
+        $conn->query("UPDATE events SET title='$title', description='$desc', date='$date', image='$img' WHERE id=$id");
+        $event = array_merge($event, ['title'=>$title,'description'=>$_POST['description'],'date'=>$date,'image'=>$image]);
+        $msg = '✅ Event updated!'; $type = 'success';
+    } elseif (empty($msg)) {
+        $msg = '⚠️ Title and date required.'; $type = 'error';
+    }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Edit Event</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .form-container {
-      max-width: 500px;
-      margin: 40px auto;
-      background: #f9f9f9;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    .form-container input, .form-container textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .form-container button {
-      background: #007bff;
-      color: #fff;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 5px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Event – UIU Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="admin-table.css">
 </head>
 <body>
-
-<div class="form-container">
-  <h2>Edit Event</h2>
-  <form method="post" enctype="multipart/form-data">
-    <input type="text" name="title" value="<?= htmlspecialchars($event['title']) ?>" required>
-    <textarea name="description" rows="4"><?= htmlspecialchars($event['description']) ?></textarea>
-    <input type="date" name="date" value="<?= $event['date'] ?>" required>
-    
-    <?php if (!empty($event['image'])): ?>
-      <p>Current Image:</p>
-      <img src="<?= $event['image'] ?>" width="100"><br>
-    <?php endif; ?>
-    
-    <label>Upload New Image (optional)</label>
-    <input type="file" name="image">
-    
-    <button type="submit">Update Event</button>
-  </form>
-  <a href="manage_events.php" style="display:block;margin-top:10px;text-align:center;">⬅ Back to Manage Events</a>
+<div class="admin-wrap">
+  <h2>✏️ Edit Event</h2>
+  <div class="form-container">
+    <?php if ($msg): ?><div class="form-msg <?= $type ?>"><?= $msg ?></div><?php endif; ?>
+    <form method="POST" enctype="multipart/form-data">
+      <label>Event Title:</label>
+      <input type="text" name="title" value="<?= htmlspecialchars($event['title']) ?>" required>
+      <label>Description:</label>
+      <textarea name="description" rows="4"><?= htmlspecialchars($event['description']) ?></textarea>
+      <label>Date:</label>
+      <input type="date" name="date" value="<?= htmlspecialchars($event['date']) ?>" required>
+      <?php if (!empty($event['image'])): ?>
+        <p style="margin-bottom:8px">Current image:</p>
+        <img src="<?= htmlspecialchars($event['image']) ?>" class="thumb" alt="current" style="width:80px;height:80px;border-radius:6px;margin-bottom:12px">
+      <?php endif; ?>
+      <label>Replace Image (optional):</label>
+      <input type="file" name="image" accept="image/*">
+      <button type="submit" class="btn btn-submit">Update Event</button>
+    </form>
+    <div class="back-row" style="margin-top:14px;">
+      <a href="manage_events.php" class="btn btn-back">⬅ Back to Events</a>
+    </div>
+  </div>
 </div>
 </body>
 </html>

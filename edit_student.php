@@ -1,179 +1,63 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: admin_login.php");
-    exit();
-}
+if (!isset($_SESSION['admin_logged_in'])) { header('Location: admin_login.php'); exit(); }
 include 'db_connect.php';
 
-$id = intval($_GET['id']);
-$result = $conn->query("SELECT * FROM students WHERE id=$id");
-if ($result->num_rows == 0) {
-    die("Student not found!");
-}
-$student = $result->fetch_assoc();
+$id  = (int)($_GET['id'] ?? 0);
+$res = $conn->query("SELECT * FROM students WHERE id=$id");
+if (!$res || $res->num_rows === 0) { die('Student not found.'); }
+$student = $res->fetch_assoc();
 
-$msg = "";
+$msg  = '';
+$type = '';
 
-// ✅ Update student details
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullname = $conn->real_escape_string($_POST['fullname']);
-    $department = $conn->real_escape_string($_POST['department']);
-    $level = $conn->real_escape_string($_POST['level']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fullname   = $conn->real_escape_string(trim($_POST['fullname']   ?? ''));
+    $department = $conn->real_escape_string($_POST['department']      ?? '');
+    $level      = $conn->real_escape_string($_POST['level']           ?? '');
 
     $conn->query("UPDATE students SET fullname='$fullname', department='$department', level='$level' WHERE id=$id");
-    $msg = "✅ Student updated successfully!";
-    // Refresh data
-    $student = $conn->query("SELECT * FROM students WHERE id=$id")->fetch_assoc();
+    $student['fullname']   = $fullname;
+    $student['department'] = $department;
+    $student['level']      = $level;
+    $msg  = '✅ Student updated successfully!';
+    $type = 'success';
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Edit Student</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f4ff;
-            margin: 0;
-            padding: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .form-box {
-            background: #fff;
-            padding: 30px 35px;
-            width: 420px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 50, 0.1);
-            text-align: center;
-            color: #333;
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        h2 {
-            margin-bottom: 25px;
-            font-weight: 600;
-            color: #0052cc;
-            letter-spacing: 0.5px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            text-align: left;
-            color: #444;
-        }
-
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px 14px;
-            margin-bottom: 20px;
-            border: 1.8px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus, select:focus {
-            border-color: #2575fc;
-            outline: none;
-            box-shadow: 0 0 8px rgba(37, 117, 252, 0.4);
-        }
-
-        button {
-            width: 100%;
-            background: #2575fc;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background: #0052cc;
-            transform: translateY(-2px);
-        }
-
-        .msg {
-            margin-bottom: 18px;
-            font-weight: 600;
-            color: green;
-            background: #e0f1ff;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 1px 4px rgba(0, 82, 204, 0.2);
-        }
-
-        a.back-link {
-            display: inline-block;
-            margin-top: 22px;
-            text-decoration: none;
-            font-weight: 600;
-            color: #2575fc;
-            transition: color 0.3s ease;
-        }
-
-        a.back-link:hover {
-            color: #0052cc;
-            text-decoration: underline;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Student – UIU Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="admin-table.css">
 </head>
-<body>
+<body class="page-center">
+  <div class="edit-form-box">
+    <h2>✏️ Edit Student</h2>
+    <?php if ($msg): ?><div class="msg"><?= $msg ?></div><?php endif; ?>
+    <form method="POST">
+      <label>Full Name</label>
+      <input type="text" name="fullname" value="<?= htmlspecialchars($student['fullname']) ?>" required>
 
-    <div class="form-box">
-        <h2>Edit Student</h2>
-        <?php if ($msg) echo "<div class='msg'>$msg</div>"; ?>
-        <form method="post">
-            <label for="fullname">Full Name</label>
-            <input id="fullname" type="text" name="fullname" value="<?= htmlspecialchars($student['fullname']); ?>" required>
+      <label>Department</label>
+      <select name="department" required>
+        <?php foreach (['CSE','EEE','Business','Civil'] as $d): ?>
+          <option <?= $student['department'] === $d ? 'selected' : '' ?>><?= $d ?></option>
+        <?php endforeach; ?>
+      </select>
 
-            <label for="department">Department</label>
-            <select id="department" name="department" required>
-                <option value="CSE" <?= $student['department'] === "CSE" ? "selected" : "" ?>>CSE</option>
-                <option value="EEE" <?= $student['department'] === "EEE" ? "selected" : "" ?>>EEE</option>
-                <option value="Business" <?= $student['department'] === "Business" ? "selected" : "" ?>>Business</option>
-                <option value="Civil" <?= $student['department'] === "Civil" ? "selected" : "" ?>>Civil</option>
-            </select>
+      <label>Level</label>
+      <select name="level" required>
+        <?php foreach (['Undergraduate','Masters'] as $l): ?>
+          <option <?= $student['level'] === $l ? 'selected' : '' ?>><?= $l ?></option>
+        <?php endforeach; ?>
+      </select>
 
-            <label for="level">Level</label>
-            <select id="level" name="level" required>
-                <option value="Undergraduate" <?= $student['level'] === "Undergraduate" ? "selected" : "" ?>>Undergraduate</option>
-                <option value="Masters" <?= $student['level'] === "Masters" ? "selected" : "" ?>>Masters</option>
-            </select>
-
-            <button type="submit">Update</button>
-        </form>
-        <a href="manage_students.php" class="back-link">⬅ Back to Manage Students</a>
-    </div>
-
+      <button type="submit">Update Student</button>
+    </form>
+    <a href="manage_students.php" class="back-link">⬅ Back to Students</a>
+  </div>
 </body>
 </html>

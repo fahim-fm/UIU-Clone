@@ -1,101 +1,67 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-  header("Location: admin_login.php");
-  exit();
-}
-
+if (!isset($_SESSION['admin_logged_in'])) { header('Location: admin_login.php'); exit(); }
 include 'db_connect.php';
 
-// ✅ Delete notice
 if (isset($_GET['delete'])) {
-    $delete_id = intval($_GET['delete']);
-
-    // Fetch PDF file to delete from folder
-    $pdfQuery = $conn->query("SELECT pdf_file FROM notices WHERE id=$delete_id");
-    if ($pdfQuery && $pdfQuery->num_rows > 0) {
-        $pdfRow = $pdfQuery->fetch_assoc();
-        if (!empty($pdfRow['pdf_file']) && file_exists($pdfRow['pdf_file'])) {
-            unlink($pdfRow['pdf_file']); // delete file
-        }
+    $id  = (int)$_GET['delete'];
+    $res = $conn->query("SELECT pdf_file FROM notices WHERE id=$id");
+    if ($res && $row = $res->fetch_assoc()) {
+        if (!empty($row['pdf_file']) && file_exists($row['pdf_file'])) unlink($row['pdf_file']);
     }
-
-    $conn->query("DELETE FROM notices WHERE id=$delete_id");
-    header("Location: manage_notices.php");
+    $conn->query("DELETE FROM notices WHERE id=$id");
+    header('Location: manage_notices.php');
     exit();
 }
 
-// ✅ Fetch all notices
 $result = $conn->query("SELECT * FROM notices ORDER BY date DESC");
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Manage Notices</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    table {
-      width: 90%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    table th, table td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    table th {
-      background: #333;
-      color: #fff;
-    }
-    .btn {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      color: white;
-    }
-    .edit-btn { background: #007bff; }
-    .delete-btn { background: #dc3545; }
-    .back-btn { background: #28a745; margin: 20px auto; display: block; width: 200px; text-align: center; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Notices – UIU Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="admin-table.css">
 </head>
 <body>
-
-<h2 style="text-align:center;">Manage Notices</h2>
-
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Date</th>
-    <th>PDF</th>
-    <th>Actions</th>
-  </tr>
-
-  <?php while ($row = $result->fetch_assoc()) { ?>
-    <tr>
-      <td><?= $row['id'] ?></td>
-      <td><?= htmlspecialchars($row['title']) ?></td>
-      <td><?= $row['date'] ?></td>
-      <td>
-        <?php if (!empty($row['pdf_file'])): ?>
-          <a href="<?= $row['pdf_file'] ?>" target="_blank">📄 View PDF</a>
+<div class="admin-wrap">
+  <h2>📋 Manage Notices</h2>
+  <div class="back-row" style="margin-bottom:16px;">
+    <a href="add_notice.php"       class="btn btn-edit">+ Add New Notice</a>
+    <a href="admin_dashboard.php"  class="btn btn-back" style="margin-left:8px;">⬅ Dashboard</a>
+  </div>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Title</th><th>Date</th><th>PDF</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <?php if ($result && $result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+              <td><?= (int)$row['id'] ?></td>
+              <td><?= htmlspecialchars($row['title']) ?></td>
+              <td><?= htmlspecialchars($row['date']) ?></td>
+              <td>
+                <?php if (!empty($row['pdf_file'])): ?>
+                  <a href="<?= htmlspecialchars($row['pdf_file']) ?>" target="_blank" rel="noopener">📄 View</a>
+                <?php else: ?>—<?php endif; ?>
+              </td>
+              <td class="actions">
+                <a class="btn btn-edit"   href="edit_notice.php?id=<?= (int)$row['id'] ?>">Edit</a>
+                <a class="btn btn-delete" href="manage_notices.php?delete=<?= (int)$row['id'] ?>"
+                   onclick="return confirm('Delete this notice?')">Delete</a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
         <?php else: ?>
-          No PDF
+          <tr><td colspan="5" style="text-align:center">No notices found.</td></tr>
         <?php endif; ?>
-      </td>
-      <td>
-        <a class="btn edit-btn" href="edit_notice.php?id=<?= $row['id'] ?>">Edit</a>
-        <a class="btn delete-btn" href="manage_notices.php?delete=<?= $row['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
-      </td>
-    </tr>
-  <?php } ?>
-</table>
-
-<a href="admin_dashboard.php" class="btn back-btn">⬅ Back to Dashboard</a>
-
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>
